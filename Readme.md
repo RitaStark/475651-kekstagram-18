@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Маргарита](https://up.htmlacademy.ru/javascript/18/user/475651).
-* Наставник: `Неизвестно`.
+* Наставник: `Олег Зубов`.
 
 ---
 
