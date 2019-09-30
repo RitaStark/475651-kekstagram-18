@@ -40,14 +40,13 @@ for (var i = 1; i <= COUNT; i++) {
 };
 
 
-// конец выполнения первого пункта задания ----------------------------------------------------------------------------------------------
+// конец выполнения первого пункта задания ---------------------------------------------------
+
+// var array = [url, likes, comments];
 
 
 
-
-
-
-var fragment = document.createDocumentFragment();
+// var fragment = document.createDocumentFragment();
 var social = document.querySelector('.social');
 var template = document.querySelector('#picture').content.querySelector('a');
 for (var i = 0; i < COUNT; i++) {
@@ -56,6 +55,7 @@ for (var i = 0; i < COUNT; i++) {
   social.appendChild(element);
   // fragment.appendChild(element);
 };
+
 
 
 var userImage = document.querySelector('.picture__img');
