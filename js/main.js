@@ -36,13 +36,13 @@ for (var i = 1; i <= COUNT; i++) {
       name: randomItemCulculation(namesList),
     }
   }
-  console.log(objectItem);
 };
 
 // конец выполнения первого пункта задания ---------------------------------------------------
 
 
 // var fragment = document.createDocumentFragment();
+
 var pictureInfo = document.querySelector('.pictures');
 var template = document.querySelector('#picture').content.querySelector('a');
 for (var i = 0; i < COUNT; i++) {
@@ -50,17 +50,21 @@ for (var i = 0; i < COUNT; i++) {
   element.children[0].textContent = i;
   pictureInfo.appendChild(element);
   // fragment.appendChild(element);
+  console.log(pictureInfo);
 };
 
-var userImage = document.querySelectorAll('.picture__img');
-var userLikes = document.querySelectorAll('.picture__likes');
-var userComments = document.querySelectorAll('.picture__comments');
 
-for (var i = 1; i < COUNT; i++) {
-  userImage[i].src = 'photos/' + i + '.jpg';
-  userLikes[i].textContent = objectItem.likes;
-  userComments[i].textContent = objectItem.comments.message;
+var fillFunction = function () {
+  for (var i = 1; i < COUNT; i++) {
+    var userImage = document.querySelectorAll('.picture__img');
+    var userLikes = document.querySelectorAll('.picture__likes');
+    var userComments = document.querySelectorAll('.picture__comments');
+    userImage[i].src = 'photos/' + i + '.jpg';
+    userLikes[i].textContent = objectItem.likes;
+    userComments[i].textContent = objectItem.comments.message;
+  };
 };
+fillFunction();
 
 console.log(pictureInfo);
 
