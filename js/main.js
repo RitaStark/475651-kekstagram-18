@@ -39,41 +39,30 @@ for (var i = 1; i <= COUNT; i++) {
   console.log(objectItem);
 };
 
-
 // конец выполнения первого пункта задания ---------------------------------------------------
-
-// var array = [url, likes, comments];
-
 
 
 // var fragment = document.createDocumentFragment();
-var social = document.querySelector('.social');
+var pictureInfo = document.querySelector('.pictures');
 var template = document.querySelector('#picture').content.querySelector('a');
 for (var i = 0; i < COUNT; i++) {
   var element = template.cloneNode(true);
   element.children[0].textContent = i;
-  social.appendChild(element);
+  pictureInfo.appendChild(element);
   // fragment.appendChild(element);
 };
 
-
-
-var userImage = document.querySelector('.picture__img');
-userImage.src = 'photos/' + i + '.jpg';
-
-
-var userLikes = document.querySelector('.picture__likes');
-userLikes.textContent = objectItem.likes;
-
-
+var userImage = document.querySelectorAll('.picture__img');
+var userLikes = document.querySelectorAll('.picture__likes');
 var userComments = document.querySelectorAll('.picture__comments');
-userComments.textContent = objectItem.comments.message;
+
+for (var i = 1; i < COUNT; i++) {
+  userImage[i].src = 'photos/' + i + '.jpg';
+  userLikes[i].textContent = objectItem.likes;
+  userComments[i].textContent = objectItem.comments.message;
+};
+
+console.log(pictureInfo);
 
 
-
-console.log(social);
-
-
-// var fragment = document.createDocumentFragment();
-
-// social.appendChild(fragment);
+// pictureInfo.appendChild(fragment);
