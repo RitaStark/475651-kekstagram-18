@@ -1,6 +1,6 @@
 'use strict';
 
-var COUNT = 25;
+var COUNT = 24;
 
 var randomNumberCulculation = function (min, max) {
   var randomNumber = min + Math.random() * (max + 1 - min);
@@ -23,9 +23,11 @@ var commentList = [
 
 var namesList = ['Вася', 'Петя', 'Артем', 'Иван', 'Маша', 'Саша', 'Даша', 'Коля'];
 
-for (var i = 1; i <= COUNT; i++) {
-  var urlList = 'photos/' + i + '.jpg';
-  var avatarList = 'img/avatar-' + i + '.svg';
+
+var objectArray = [];
+for (var i = 0; i < COUNT; i++) {
+  var urlList = 'photos/' + (i + 1) + '.jpg';
+  var avatarList = 'img/avatar-' + (i + 1) + '.svg';
   var objectItem = {
     url: urlList,
     description: 'Описание фото',
@@ -36,37 +38,34 @@ for (var i = 1; i <= COUNT; i++) {
       name: randomItemCulculation(namesList),
     }
   }
+  objectArray[i] = objectItem;
 };
 
-// конец выполнения первого пункта задания ---------------------------------------------------
-
-
-// var fragment = document.createDocumentFragment();
+var render = function (object) {
+  var template = document.querySelector('#picture').content.querySelector('a');
+  var element = template.cloneNode(true);
+  var userImage = element.querySelector('.picture__img');
+  var userLikes = element.querySelector('.picture__likes');
+  var userComments = element.querySelector('.picture__comments');
+  userImage.src = object.url;
+  userLikes.textContent = object.likes;
+  userComments.textContent = 1;
+  return element;
+};
 
 var pictureInfo = document.querySelector('.pictures');
-var template = document.querySelector('#picture').content.querySelector('a');
-for (var i = 0; i < COUNT; i++) {
-  var element = template.cloneNode(true);
-  element.children[0].textContent = i;
-  pictureInfo.appendChild(element);
-  // fragment.appendChild(element);
-  console.log(pictureInfo);
-};
+var fragment = document.createDocumentFragment();
 
 
-var fillFunction = function () {
-  for (var i = 1; i < COUNT; i++) {
-    var userImage = document.querySelectorAll('.picture__img');
-    var userLikes = document.querySelectorAll('.picture__likes');
-    var userComments = document.querySelectorAll('.picture__comments');
-    userImage[i].src = 'photos/' + i + '.jpg';
-    userLikes[i].textContent = objectItem.likes;
-    userComments[i].textContent = objectItem.comments.message;
+var fillBlock = function () {
+  for (var i = 0; i < COUNT; i++) {
+    var picture = render(objectArray[i]);
+    fragment.appendChild(picture);
   };
 };
-fillFunction();
-
-console.log(pictureInfo);
+fillBlock(picture);
 
 
-// pictureInfo.appendChild(fragment);
+pictureInfo.appendChild(fragment);
+
+
