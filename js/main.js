@@ -108,6 +108,7 @@ var scaleSmallerClickHandler = function () {
   if (numberScaleValue > 25 && numberScaleValue <= 100) {
     numberScaleValue -= 25;
     var percentScaleValue = numberScaleValue + "%";
+    var imagePreview = document.querySelector(".img-upload__preview").style.transform = "scale(" + numberScaleValue / 100 + ")";
     console.log(percentScaleValue);
   }
 };
@@ -118,10 +119,13 @@ var scaleBiggerClickHandler = function () {
   if (numberScaleValue >= 25 && numberScaleValue < 100) {
     numberScaleValue += 25;
     var percentScaleValue = numberScaleValue + "%";
+    var imagePreview = document.querySelector(".img-upload__preview").style.transform = "scale(" + numberScaleValue / 100 + ")";
     console.log(percentScaleValue);
   }
 };
 scaleBigger.addEventListener("click", scaleBiggerClickHandler);
+
+
 
 
 
