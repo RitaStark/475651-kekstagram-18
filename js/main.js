@@ -87,7 +87,6 @@ closeButton.addEventListener('click', function (evt) {
 });
 
 document.addEventListener('keydown', function (evt) {
-  console.log('keydown');
   if (evt.keyCode === 27) {
     evt.preventDefault();
     changeImage.classList.add('hidden');
@@ -100,16 +99,15 @@ var scaleControl = document.querySelector(".scale");
 var scaleSmaller = scaleControl.querySelector(".scale__control--smaller");
 var scaleBigger = scaleControl.querySelector(".scale__control--bigger");
 var scaleValue = scaleControl.querySelector(".scale__control--value");
-
-scaleValue.value = 100;
-var numberScaleValue = Number(scaleValue.value);
+scaleValue.value = 100 + "%";
+var numberScaleValue = parseInt(scaleValue.value);
 
 var scaleSmallerClickHandler = function () {
   if (numberScaleValue > 25 && numberScaleValue <= 100) {
     numberScaleValue -= 25;
     var percentScaleValue = numberScaleValue + "%";
+    scaleValue.value = percentScaleValue;
     var imagePreview = document.querySelector(".img-upload__preview").style.transform = "scale(" + numberScaleValue / 100 + ")";
-    console.log(percentScaleValue);
   }
 };
 scaleSmaller.addEventListener("click", scaleSmallerClickHandler);
@@ -119,12 +117,39 @@ var scaleBiggerClickHandler = function () {
   if (numberScaleValue >= 25 && numberScaleValue < 100) {
     numberScaleValue += 25;
     var percentScaleValue = numberScaleValue + "%";
+    scaleValue.value = percentScaleValue;
     var imagePreview = document.querySelector(".img-upload__preview").style.transform = "scale(" + numberScaleValue / 100 + ")";
-    console.log(percentScaleValue);
   }
 };
 scaleBigger.addEventListener("click", scaleBiggerClickHandler);
 
+
+
+var effects = document.querySelector(".effects");
+var effectsRadio = effects.querySelector(".effects__radio");
+var imgPreview = document.querySelector(".img-upload__preview img");
+
+imgPreview.classList.add("effects__preview--none");
+
+var addEffectHandler = function (event) {
+  imgPreview.className = "";
+
+  var target = event.target;
+  if (target.value == "chrome") {
+    imgPreview.classList.add("effects__preview--chrome");
+  } else if (target.value == "sepia") {
+    imgPreview.classList.add("effects__preview--sepia");
+  } else if (target.value == "marvin") {
+    imgPreview.classList.add("effects__preview--marvin");
+  } else if (target.value == "phobos") {
+    imgPreview.classList.add("effects__preview--phobos");
+  } else if (target.value == "heat") {
+    imgPreview.classList.add("effects__preview--heat");
+  } else {
+    imgPreview.classList.add("effects__preview--none");
+  }
+};
+effects.addEventListener("change", addEffectHandler);
 
 
 
