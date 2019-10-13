@@ -154,3 +154,42 @@ effects.addEventListener("change", addEffectHandler);
 
 
 
+var pinHandle = document.querySelector(".effect-level__pin");
+var pinValue = document.querySelector(".effect-level__value");
+
+pinHandle.addEventListener("mousedown", function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+    };
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+    pinHandle.style.left = (pinHandle.offsetLeft - shift.x) + "px";
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      pinHandle.removeEventListener("mousemove", onMouseMove);
+      pinHandle.removeEventListener("mouseup", onMouseUp);
+      console.log("fff");
+    };
+
+    pinHandle.addEventListener("mouseup", onMouseUp);
+
+  };
+
+  pinHandle.addEventListener("mousemove", onMouseMove);
+  // pinHandle.addEventListener("mouseup", onMouseUp);
+});
+
+
+
