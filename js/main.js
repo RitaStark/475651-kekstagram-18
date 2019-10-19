@@ -128,6 +128,26 @@ scaleBigger.addEventListener("click", scaleBiggerClickHandler);
 var effects = document.querySelector(".effects");
 var effectsRadio = effects.querySelector(".effects__radio");
 var imgPreview = document.querySelector(".img-upload__preview img");
+var currentEffect = "none";
+
+var applyEffect = function (name, strength) {
+  if (name == "chrome") {
+    imgPreview.style.filter = "grayscale(" + strength + ")";
+  } else if (name == "sepia") {
+    imgPreview.style.filter = "sepia(" + strength + ")";
+  } else if (name == "marvin") {
+    imgPreview.style.filter = "invert(" + (strength * 100) + "%)";
+  } else if (name == "phobos") {
+    imgPreview.style.filter = "blur(" + (strength * 3) + "px)";
+  } else if (name == "heat") {
+    imgPreview.style.filter = "brightness(" + (strength * 2 + 1) + ")";
+  } else {
+    imgPreview.style.filter = "";
+  }
+
+};
+
+
 
 imgPreview.classList.add("effects__preview--none");
 
@@ -148,10 +168,9 @@ var addEffectHandler = function (event) {
   } else {
     imgPreview.classList.add("effects__preview--none");
   }
+  currentEffect = target.value;
 };
 effects.addEventListener("change", addEffectHandler);
-
-
 
 
 var pinHandle = document.querySelector(".effect-level__pin");
@@ -191,6 +210,11 @@ pinHandle.addEventListener("mousedown", function (evt) {
     pinHandle.style.left = newLeft + "px";
     console.log("clientX", moveEvt.clientX, "offsetleft", pinHandle.offsetLeft, "width", pinLine.clientWidth);
 
+    // filters
+
+    var effectStrength = newLeft / (pinLine.clientWidth - 1);
+    console.log("Сила эффекта", effectStrength);
+    applyEffect(currentEffect, effectStrength);
   };
 
   var onMouseUp = function (upEvt) {
