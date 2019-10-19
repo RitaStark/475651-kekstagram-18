@@ -152,23 +152,25 @@ var applyEffect = function (name, strength) {
 imgPreview.classList.add("effects__preview--none");
 
 var addEffectHandler = function (event) {
-  imgPreview.className = "";
+  // imgPreview.className = "";
 
   var target = event.target;
-  if (target.value == "chrome") {
-    imgPreview.classList.add("effects__preview--chrome");
-  } else if (target.value == "sepia") {
-    imgPreview.classList.add("effects__preview--sepia");
-  } else if (target.value == "marvin") {
-    imgPreview.classList.add("effects__preview--marvin");
-  } else if (target.value == "phobos") {
-    imgPreview.classList.add("effects__preview--phobos");
-  } else if (target.value == "heat") {
-    imgPreview.classList.add("effects__preview--heat");
-  } else {
-    imgPreview.classList.add("effects__preview--none");
-  }
+  // if (target.value == "chrome") {
+  //   imgPreview.classList.add("effects__preview--chrome");
+  // } else if (target.value == "sepia") {
+  //   imgPreview.classList.add("effects__preview--sepia");
+  // } else if (target.value == "marvin") {
+  //   imgPreview.classList.add("effects__preview--marvin");
+  // } else if (target.value == "phobos") {
+  //   imgPreview.classList.add("effects__preview--phobos");
+  // } else if (target.value == "heat") {
+  //   imgPreview.classList.add("effects__preview--heat");
+  // } else {
+  //   imgPreview.classList.add("effects__preview--none");
+  //   effectLevel.classList.add('hidden');
+  // }
   currentEffect = target.value;
+  applyEffect(currentEffect, 1);
 };
 effects.addEventListener("change", addEffectHandler);
 
