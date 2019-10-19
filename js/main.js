@@ -156,6 +156,8 @@ effects.addEventListener("change", addEffectHandler);
 
 var pinHandle = document.querySelector(".effect-level__pin");
 var pinValue = document.querySelector(".effect-level__value");
+var pinLine = document.querySelector(".effect-level__line");
+
 
 pinHandle.addEventListener("mousedown", function (evt) {
   evt.preventDefault();
@@ -174,22 +176,37 @@ pinHandle.addEventListener("mousedown", function (evt) {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
-    pinHandle.style.left = (pinHandle.offsetLeft - shift.x) + "px";
+    var newLeft = pinHandle.offsetLeft - shift.x;
+    // if (newLeft >= pinLine.clientWidth) {
+    //   newLeft = pinLine.clientWidth - 1;
+    // };
+    newLeft = Math.min(newLeft, pinLine.clientWidth - 1);
+    // if (newLeft < 0) {
+    //   newLeft = 0;
+    // };
+    newLeft = Math.max(newLeft, 0);
 
-    var onMouseUp = function (upEvt) {
-      upEvt.preventDefault();
-      pinHandle.removeEventListener("mousemove", onMouseMove);
-      pinHandle.removeEventListener("mouseup", onMouseUp);
-      console.log("fff");
-    };
+    // newLeft = Math.max(Math.min(newLeft, pinLine.clientWidth), 0);
 
-    pinHandle.addEventListener("mouseup", onMouseUp);
+    pinHandle.style.left = newLeft + "px";
+    console.log("clientX", moveEvt.clientX, "offsetleft", pinHandle.offsetLeft, "width", pinLine.clientWidth);
 
   };
 
-  pinHandle.addEventListener("mousemove", onMouseMove);
-  // pinHandle.addEventListener("mouseup", onMouseUp);
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+    document.removeEventListener("mousemove", onMouseMove);
+    document.removeEventListener("mouseup", onMouseUp);
+  };
+
+  document.addEventListener("mousemove", onMouseMove);
+  document.addEventListener("mouseup", onMouseUp);
 });
 
 
 
+// function showLineCoords(event) {
+//   var x = event.clientX;
+//   return x;
+// };
+// console.log(pinLine);
