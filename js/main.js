@@ -218,6 +218,7 @@ pinHandle.addEventListener("mousedown", function (evt) {
 
     // filters
 
+    // effectStrength принимает значения от 0 до 1
     var effectStrength = newLeft / (pinLine.clientWidth - 1);
     console.log("Сила эффекта", effectStrength);
     applyEffect(currentEffect, effectStrength);
