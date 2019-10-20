@@ -147,6 +147,10 @@ var applyEffect = function (name, strength) {
 
 };
 
+var updateSliderPosition = function (position) {
+  pinHandle.style.left = position * (pinLine.clientWidth - 1) + "px";
+
+};
 
 
 imgPreview.classList.add("effects__preview--none");
@@ -171,6 +175,7 @@ var addEffectHandler = function (event) {
   // }
   currentEffect = target.value;
   applyEffect(currentEffect, 1);
+  updateSliderPosition(1);
 };
 effects.addEventListener("change", addEffectHandler);
 
