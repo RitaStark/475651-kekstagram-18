@@ -234,10 +234,26 @@ pinHandle.addEventListener("mousedown", function (evt) {
   document.addEventListener("mouseup", onMouseUp);
 });
 
+// tags and comments
 
+var userPhotoTag = document.querySelector(".text__hashtags");
+var userPhotoComment = document.querySelector(".text__description");
 
-// function showLineCoords(event) {
-//   var x = event.clientX;
-//   return x;
-// };
-// console.log(pinLine);
+userPhotoTag.addEventListener("input", function (evt) {
+  var target = evt.target;
+  if (target.value.length < 2) {
+    target.setCustomValidity("Хэш-тег должен состоять минимум из 2-х символов и начинаться с \#");
+  } else if (target.value.length > 20) {
+    target.setCustomValidity("Хэш-тег должен состоять максимум из 20-ти символов");
+  } else {
+    target.setCustomValidity("");
+  };
+});
+
+userPhotoComment.addEventListener("invalid", function (evt) {
+  if (userPhotoComment.validity.tooLong) {
+    userPhotoComment.setCustomValidity("Комментарий не должен превыщать 140 символов");
+  } else {
+    userPhotoComment.setCustomValidity("");
+  };
+});
