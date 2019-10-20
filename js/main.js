@@ -128,6 +128,10 @@ scaleBigger.addEventListener("click", scaleBiggerClickHandler);
 var effects = document.querySelector(".effects");
 var effectsRadio = effects.querySelector(".effects__radio");
 var imgPreview = document.querySelector(".img-upload__preview img");
+var pinLine = document.querySelector(".effect-level__line");
+var pinHandle = document.querySelector(".effect-level__pin");
+var pinValue = document.querySelector(".effect-level__value");
+
 var currentEffect = "none";
 
 var applyEffect = function (name, strength) {
@@ -178,11 +182,6 @@ var addEffectHandler = function (event) {
   updateSliderPosition(1);
 };
 effects.addEventListener("change", addEffectHandler);
-
-
-var pinHandle = document.querySelector(".effect-level__pin");
-var pinValue = document.querySelector(".effect-level__value");
-var pinLine = document.querySelector(".effect-level__line");
 
 
 pinHandle.addEventListener("mousedown", function (evt) {
