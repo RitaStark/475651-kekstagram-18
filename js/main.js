@@ -128,6 +128,8 @@ scaleBigger.addEventListener("click", scaleBiggerClickHandler);
 var effects = document.querySelector(".effects");
 var effectsRadio = effects.querySelector(".effects__radio");
 var imgPreview = document.querySelector(".img-upload__preview img");
+var effectLevel = document.querySelector(".effect-level");
+
 var pinLine = document.querySelector(".effect-level__line");
 var pinHandle = document.querySelector(".effect-level__pin");
 var pinValue = document.querySelector(".effect-level__value");
@@ -156,6 +158,13 @@ var updateSliderPosition = function (position) {
 
 };
 
+var hideSlider = function () {
+  effectLevel.classList.add('hidden');
+};
+
+var showSlider = function () {
+  effectLevel.classList.remove('hidden');
+};
 
 imgPreview.classList.add("effects__preview--none");
 
@@ -179,7 +188,14 @@ var addEffectHandler = function (event) {
   // }
   currentEffect = target.value;
   applyEffect(currentEffect, 1);
-  updateSliderPosition(1);
+
+  if (currentEffect == "none") {
+    hideSlider();
+  } else {
+    showSlider();
+    updateSliderPosition(1);
+  };
+
 };
 effects.addEventListener("change", addEffectHandler);
 
