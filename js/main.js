@@ -254,22 +254,43 @@ pinHandle.addEventListener("mousedown", function (evt) {
 
 var userPhotoTag = document.querySelector(".text__hashtags");
 var userPhotoComment = document.querySelector(".text__description");
+var userTagInput = document.querySelector("input.text__hashtags");
 
-userPhotoTag.addEventListener("input", function (evt) {
-  var target = evt.target;
-  if (target.value.length < 2) {
-    target.setCustomValidity("Хэш-тег должен состоять минимум из 2-х символов и начинаться с \#");
-  } else if (target.value.length > 20) {
-    target.setCustomValidity("Хэш-тег должен состоять максимум из 20-ти символов");
-  } else {
-    target.setCustomValidity("");
+// userPhotoComment.addEventListener("invalid", function (evt) {
+//   if (userPhotoComment.validity.tooLong) {
+//     userPhotoComment.setCustomValidity("Комментарий не должен превыщать 140 символов");
+//   } else {
+//     userPhotoComment.setCustomValidity("");
+//   };
+// });
+
+// userPhotoTag.addEventListener("input", function (evt) {
+//   var target = evt.target;
+//   if (target.value.length < 2) {
+//     target.setCustomValidity("Хэш-тег должен состоять минимум из 2-х символов и начинаться с \#");
+//   } else if (target.value.length > 20) {
+//     target.setCustomValidity("Хэш-тег должен состоять максимум из 20-ти символов");
+//   } else {
+//     target.setCustomValidity("");
+//   };
+// });
+
+var userTagInput = document.querySelector("input.text__hashtags");
+var tagsList = "t, tag2, tag3, tag4, tag5";
+var tagsArr = tagsList.split(", ");
+userPhotoTag.addEventListener("input", function () {
+  for (var i = 0; i < tagsArr.length; i++) {
+    var tag = tagsArr[i];
+    if (tag.length < 2) {
+      userTagInput.setCustomValidity("Хэш-тег должен состоять минимум из 2-х символов и начинаться с \#");
+    } else if (tag.length > 20) {
+      userTagInput.setCustomValidity("Хэш-тег должен состоять максимум из 20-ти символов");
+    } else {
+      userTagInput.setCustomValidity("");
+    };
+    // console.log("Тэг:" + tag);
   };
 });
 
-userPhotoComment.addEventListener("invalid", function (evt) {
-  if (userPhotoComment.validity.tooLong) {
-    userPhotoComment.setCustomValidity("Комментарий не должен превыщать 140 символов");
-  } else {
-    userPhotoComment.setCustomValidity("");
-  };
-});
+
+
