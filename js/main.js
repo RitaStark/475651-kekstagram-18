@@ -303,6 +303,8 @@ userPhotoTag.addEventListener("input", function () {
       validationError = "Хэш-тег должен начинаться с \#";
     } else if (arrContains(tag, tagsArr.slice(0, i))) {
       validationError = "Хэш-теги не должны повторяться";
+    } else if (i > 4) {
+      validationError = "Количество хэш-тегов не должно быть больше пяти";
     }
     userTagInput.setCustomValidity(validationError);
     console.log("validating tag '" + tag + "' result: " + validationError);
