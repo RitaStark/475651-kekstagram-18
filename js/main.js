@@ -300,3 +300,9 @@ var isFocused = function (elem) {
   return elem === document.activeElement;
 };
 
+userPhotoComment.addEventListener("input", function () {
+  if (userCommentInput.value.length > 140) {
+    userCommentInput.setCustomValidity("Комментарий не должен быть больше 140 символов");
+  }
+});
+
