@@ -87,7 +87,7 @@ closeButton.addEventListener('click', function (evt) {
 });
 
 document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 27) {
+  if (evt.keyCode === 27 && !(isFocused(userTagInput) || isFocused(userCommentInput))) {
     evt.preventDefault();
     changeImage.classList.add('hidden');
   }
@@ -255,21 +255,54 @@ pinHandle.addEventListener("mousedown", function (evt) {
 var userPhotoTag = document.querySelector(".text__hashtags");
 var userPhotoComment = document.querySelector(".text__description");
 
-userPhotoTag.addEventListener("input", function (evt) {
-  var target = evt.target;
-  if (target.value.length < 2) {
-    target.setCustomValidity("Хэш-тег должен состоять минимум из 2-х символов и начинаться с \#");
-  } else if (target.value.length > 20) {
-    target.setCustomValidity("Хэш-тег должен состоять максимум из 20-ти символов");
-  } else {
-    target.setCustomValidity("");
+var userTagInput = document.querySelector("input.text__hashtags");
+var userCommentInput = document.querySelector("textarea.text__description");
+
+var arrContains = function (elem, arr) {
+  for (var i = 0; i < arr.length; i++) {
+    if (elem.toLowerCase() == arr[i].toLowerCase()) {
+      return true;
+    }
+  }
+  return false;
+};
+
+userPhotoTag.addEventListener("input", function () {
+  var tagsList = userTagInput.value;
+  var tagsArr = tagsList.split(" ");
+  console.log("tagsArr", tagsArr);
+
+  for (var i = 0; i < tagsArr.length; i++) {
+    var tag = tagsArr[i];
+    var validationError = "";
+    if (tag.length < 2) {
+      // userTagInput.setCustomValidity("Хэш-тег должен состоять минимум из 2-х символов");
+      validationError = "Хэш-тег должен состоять минимум из 2-х символов";
+    } else if (tag.length > 20) {
+      validationError = "Хэш-тег должен состоять максимум из 20-ти символов";
+    } else if (!tag.startsWith("#")) {
+      validationError = "Хэш-тег должен начинаться с \#";
+    } else if (arrContains(tag, tagsArr.slice(0, i))) {
+      validationError = "Хэш-теги не должны повторяться";
+    } else if (i > 4) {
+      validationError = "Количество хэш-тегов не должно быть больше пяти";
+    }
+    userTagInput.setCustomValidity(validationError);
+    console.log("validating tag '" + tag + "' result: " + validationError);
+    if (validationError !== "") {
+      break;
+    }
   };
 });
 
-userPhotoComment.addEventListener("invalid", function (evt) {
-  if (userPhotoComment.validity.tooLong) {
-    userPhotoComment.setCustomValidity("Комментарий не должен превыщать 140 символов");
-  } else {
-    userPhotoComment.setCustomValidity("");
-  };
+
+var isFocused = function (elem) {
+  return elem === document.activeElement;
+};
+
+userPhotoComment.addEventListener("input", function () {
+  if (userCommentInput.value.length > 140) {
+    userCommentInput.setCustomValidity("Комментарий не должен быть больше 140 символов");
+  }
 });
+
