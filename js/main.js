@@ -1,5 +1,6 @@
 'use strict';
 
+// DATA.js ----------------------------------------------------------------------------------------------------------------------
 var COUNT = 24;
 
 var randomNumberCulculation = function (min, max) {
@@ -69,9 +70,9 @@ fillBlock(picture);
 pictureInfo.appendChild(fragment);
 
 
-// --------------------------------------------------------------------------------
+// DATA.js END. -----------------------------------------------------------------------------------------------------------
 
-
+// ??? - в модуле есть событие относящееся к полям тэгов и коммертариям. они должны быть в одном блоке?
 var upload = document.querySelector('#upload-file');
 var changeImage = document.querySelector('.img-upload__overlay');
 var closeButton = changeImage.querySelector('.img-upload__cancel');
@@ -93,7 +94,9 @@ document.addEventListener('keydown', function (evt) {
   }
 });
 
+// ??? END.
 
+// PREVIEW.js  ------------------------------------------------------------------------------------------------------------
 
 var scaleControl = document.querySelector(".scale");
 var scaleSmaller = scaleControl.querySelector(".scale__control--smaller");
@@ -123,7 +126,9 @@ var scaleBiggerClickHandler = function () {
 };
 scaleBigger.addEventListener("click", scaleBiggerClickHandler);
 
+// PREVIEW.js END. ---------------------------------------------------------------------------------------------------------------
 
+// FORM.js - редактирование изображения ------------------------------------------------------------------------------------------
 
 var effects = document.querySelector(".effects");
 var effectsRadio = effects.querySelector(".effects__radio");
@@ -250,7 +255,10 @@ pinHandle.addEventListener("mousedown", function (evt) {
   document.addEventListener("mouseup", onMouseUp);
 });
 
-// tags and comments
+// FORM.js END. ---------------------------------------------------------------------------------------------------------------
+
+
+// SOCIAL.js - тэги и комментарии ---------------------------------------------------------------------------------------------
 
 var userPhotoTag = document.querySelector(".text__hashtags");
 var userPhotoComment = document.querySelector(".text__description");
@@ -305,4 +313,6 @@ userPhotoComment.addEventListener("input", function () {
     userCommentInput.setCustomValidity("Комментарий не должен быть больше 140 символов");
   }
 });
+
+// SOCIAL.js END.
 
