@@ -6,8 +6,7 @@
 
   var userTagInput = document.querySelector("input.text__hashtags");
   var userCommentInput = document.querySelector("textarea.text__description");
-  window.userTagInput = userTagInput;
-  window.userCommentInput = userCommentInput;
+
 
   var arrContains = function (elem, arr) {
     for (var i = 0; i < arr.length; i++) {
@@ -21,7 +20,7 @@
   userPhotoTag.addEventListener("input", function () {
     var tagsList = userTagInput.value;
     var tagsArr = tagsList.split(" ");
-    console.log("tagsArr", tagsArr);
+    // console.log("tagsArr", tagsArr);
 
     for (var i = 0; i < tagsArr.length; i++) {
       var tag = tagsArr[i];
@@ -39,7 +38,7 @@
         validationError = "Количество хэш-тегов не должно быть больше пяти";
       }
       userTagInput.setCustomValidity(validationError);
-      console.log("validating tag '" + tag + "' result: " + validationError);
+      // console.log("validating tag '" + tag + "' result: " + validationError);
       if (validationError !== "") {
         break;
       }
@@ -56,4 +55,6 @@
       userCommentInput.setCustomValidity("Комментарий не должен быть больше 140 символов");
     }
   });
+  window.userTagInput = userTagInput;
+  window.userCommentInput = userCommentInput;
 })();
