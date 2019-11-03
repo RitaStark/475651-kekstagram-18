@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var URL = 'https://js.dump.academy/kekstagram/data';
+  var URL = 'https://js.dump.academy/kekstagram/data1';
   window.load = function (onSuccess, onError) {
 
     var xhr = new XMLHttpRequest();
@@ -14,7 +14,6 @@
       } else {
         onError('Статус ответа: ' + xhr.status + '' + 'xht.statusText')
       }
-      // console.log(xhr.responseText);
     });
 
     xhr.addEventListener('error', function () {

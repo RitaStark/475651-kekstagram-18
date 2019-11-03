@@ -70,8 +70,13 @@
   };
 
   var onError = function (message) {
-    console.error(message);
+    var errorMessage = document.querySelector("#error").content.querySelector("section");
+    var elem = errorMessage.cloneNode(true);
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(errorMessage);
+    pictureInfo.appendChild(fragment);
   };
+
   var onSuccess = function (data) {
     console.log(data);
     renderData(data);
