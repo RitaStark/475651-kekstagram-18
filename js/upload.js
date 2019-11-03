@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var URL = 'https://js.dump.academy/kekstagram/data';
+  var URL = 'https://js.dump.academy/kekstagram';
   window.upload = function (data, onSuccess) {
     var xhr = new XMLHttpRequest();
 

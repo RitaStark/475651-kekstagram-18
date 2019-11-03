@@ -55,6 +55,17 @@
       userCommentInput.setCustomValidity("Комментарий не должен быть больше 140 символов");
     }
   });
+
+  var form = document.querySelector(".img-upload__form");
+  var formWindow = form.querySelector(".img-upload__overlay");
+  form.addEventListener('submit', function (evt) {
+    window.upload(new FormData(form), function (response) {
+      formWindow.classList.add("hidden");
+    });
+    evt.preventDefault();
+  });
+
+
   window.userTagInput = userTagInput;
   window.userCommentInput = userCommentInput;
 })();

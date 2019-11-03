@@ -128,15 +128,6 @@
 
   // --------------------------------------------------------------------------------------------------------------
 
-  var form = document.querySelector(".img-upload__form");
-  var formWindow = document.querySelector(".img-upload__overlay");
-  form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), function (response) {
-      formWindow.classList.add("hidden");
-    });
-    evt.preventDefault();
-  });
 
 
-  // window.load('https://js.dump.academy/kekstagram/data', onSuccess, onError);
 })();
