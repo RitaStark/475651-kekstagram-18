@@ -14,7 +14,6 @@
       } else {
         onError('Статус ответа: ' + xhr.status + '' + 'xht.statusText')
       }
-      // console.log(xhr.responseText);
     });
 
     xhr.addEventListener('error', function () {

@@ -69,9 +69,21 @@
     pictureInfo.appendChild(fragment);
   };
 
+  var errorMessage = document.querySelector("#error").content.querySelector("section");
   var onError = function (message) {
-    console.error(message);
+    var elem = errorMessage.cloneNode(true);
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(errorMessage);
+    pictureInfo.appendChild(fragment);
   };
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      evt.preventDefault();
+      errorMessage.parentNode.removeChild(errorMessage);
+    }
+  });
+
   var onSuccess = function (data) {
     console.log(data);
     renderData(data);
