@@ -58,6 +58,21 @@
 
   var form = document.querySelector(".img-upload__form");
   var formWindow = form.querySelector(".img-upload__overlay");
+  var success = document.querySelector("#success").content.querySelector("section");
+  var successButton = success.querySelector(".success__button");
+
+  successButton.addEventListener("click", function (evt) {
+    evt.preventDefault();
+    success.parentNode.removeChild(success);
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      evt.preventDefault();
+      success.parentNode.removeChild(success);
+    }
+  });
+
   form.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function (response) {
       formWindow.classList.add("hidden");
@@ -65,6 +80,14 @@
     evt.preventDefault();
   });
 
+  var onSuccess = function (data) {
+    var elem = success.cloneNode(true);
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(success);
+    pictureInfo.appendChild(fragment);
+  };
+
+  window.upload(form, onSuccess);
 
   window.userTagInput = userTagInput;
   window.userCommentInput = userCommentInput;
