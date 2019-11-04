@@ -58,13 +58,41 @@
 
   var form = document.querySelector(".img-upload__form");
   var formWindow = form.querySelector(".img-upload__overlay");
-  form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), function (response) {
-      formWindow.classList.add("hidden");
-    });
+  var success = document.querySelector("#success").content.querySelector("section");
+  var successButton = success.querySelector(".success__button");
+  var errorMessage = document.querySelector("#error").content.querySelector("section");
+
+  success.addEventListener("click", function (evt) {
     evt.preventDefault();
+    success.parentNode.removeChild(success);
   });
 
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      evt.preventDefault();
+      success.parentNode.removeChild(success);
+    }
+  });
+
+  var onSuccess = function (data) {
+    var elem = success.cloneNode(true);
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(success);
+    window.pictureInfo.appendChild(fragment);
+  };
+
+  var onError = function (message) {
+    var elem = errorMessage.cloneNode(true);
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(errorMessage);
+    window.pictureInfo.appendChild(fragment);
+  };
+
+  form.addEventListener('submit', function (evt) {
+    window.upload(new FormData(form), onSuccess, onError)
+    formWindow.classList.add("hidden");
+    evt.preventDefault();
+  });
 
   window.userTagInput = userTagInput;
   window.userCommentInput = userCommentInput;

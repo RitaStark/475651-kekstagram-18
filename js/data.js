@@ -58,6 +58,7 @@
   };
 
   var pictureInfo = document.querySelector('.pictures');
+  window.pictureInfo = pictureInfo;
 
   // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элетменты добавляет в DOM элемент, который представляет собой контейнер с фото.
   var renderData = function (myData) {
@@ -70,11 +71,17 @@
   };
 
   var errorMessage = document.querySelector("#error").content.querySelector("section");
+
   var onError = function (message) {
     var elem = errorMessage.cloneNode(true);
     var fragment = document.createDocumentFragment();
     fragment.appendChild(errorMessage);
     pictureInfo.appendChild(fragment);
+  };
+
+  var onSuccess = function (data) {
+    // console.log(data);
+    renderData(data);
   };
 
   document.addEventListener('keydown', function (evt) {
@@ -84,12 +91,9 @@
     }
   });
 
-  var onSuccess = function (data) {
-    console.log(data);
-    renderData(data);
-  };
 
   window.load(onSuccess, onError);
+
 
 })();
 
