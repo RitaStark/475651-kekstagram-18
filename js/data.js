@@ -58,6 +58,7 @@
   };
 
   var pictureInfo = document.querySelector('.pictures');
+  window.pictureInfo = pictureInfo;
 
   // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элетменты добавляет в DOM элемент, который представляет собой контейнер с фото.
   var renderData = function (myData) {

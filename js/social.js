@@ -60,8 +60,9 @@
   var formWindow = form.querySelector(".img-upload__overlay");
   var success = document.querySelector("#success").content.querySelector("section");
   var successButton = success.querySelector(".success__button");
+  var errorMessage = document.querySelector("#error").content.querySelector("section");
 
-  successButton.addEventListener("click", function (evt) {
+  success.addEventListener("click", function (evt) {
     evt.preventDefault();
     success.parentNode.removeChild(success);
   });
@@ -73,21 +74,31 @@
     }
   });
 
-  form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), function (response) {
-      formWindow.classList.add("hidden");
-    });
-    evt.preventDefault();
-  });
-
   var onSuccess = function (data) {
     var elem = success.cloneNode(true);
     var fragment = document.createDocumentFragment();
     fragment.appendChild(success);
-    pictureInfo.appendChild(fragment);
+    window.pictureInfo.appendChild(fragment);
   };
 
-  window.upload(form, onSuccess);
+  var onError = function (message) {
+    var elem = errorMessage.cloneNode(true);
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(errorMessage);
+    window.pictureInfo.appendChild(fragment);
+  };
+
+  form.addEventListener('submit', function (evt) {
+    window.upload(new FormData(form), onSuccess)
+    formWindow.classList.add("hidden");
+    evt.preventDefault();
+  });
+
+  form.addEventListener('submit', function (evt) {
+    window.upload(new FormData(form), onError)
+    formWindow.classList.add("hidden");
+    evt.preventDefault();
+  });
 
   window.userTagInput = userTagInput;
   window.userCommentInput = userCommentInput;
