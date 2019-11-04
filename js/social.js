@@ -89,13 +89,11 @@
   };
 
   form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), onSuccess)
-    formWindow.classList.add("hidden");
-    evt.preventDefault();
-  });
-
-  form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), onError)
+    if (window.upload(form, onSuccess)) {
+      window.upload(new FormData(form), onSuccess)
+    } else {
+      window.upload(new FormData(form), onError)
+    }
     formWindow.classList.add("hidden");
     evt.preventDefault();
   });
