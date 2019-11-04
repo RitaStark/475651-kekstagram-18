@@ -2,12 +2,8 @@
 
 (function () {
   var URL = 'https://js.dump.academy/kekstagram';
-  window.upload = function (data, onSuccess) {
+  window.upload = function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
-
-    var onError = function (message) {
-      console.log("error");
-    };
 
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
