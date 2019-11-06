@@ -57,18 +57,21 @@
     return element;
   };
 
-  var pictureInfo = document.querySelector('.pictures');
-  window.pictureInfo = pictureInfo;
 
   // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элетменты добавляет в DOM элемент, который представляет собой контейнер с фото.
+  var pictureInfo = document.querySelector('.pictures');
   var renderData = function (myData) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < myData.length; i++) {
       var elem = renderItem(myData[i]);
       fragment.appendChild(elem);
+      // window.data = {
+      //   myData: myData
+      // };
     };
     pictureInfo.appendChild(fragment);
   };
+
 
   var errorMessage = document.querySelector("#error").content.querySelector("section");
 
@@ -79,10 +82,9 @@
     pictureInfo.appendChild(fragment);
   };
 
-  var onSuccess = function (data) {
-    // console.log(data);
-    renderData(data);
-  };
+  // var onSuccess = function (data) {
+  //   renderData(data);
+  // };
 
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === 27) {
@@ -92,8 +94,14 @@
   });
 
 
-  window.load(onSuccess, onError);
+  // window.load(onSuccess, onError);
+  window.load(renderData, onError);
 
+  // window.pictureInfo = pictureInfo;
+  window.data = {
+    myData: myData,
+    pictureInfo: pictureInfo
+  };
 
 })();
 
