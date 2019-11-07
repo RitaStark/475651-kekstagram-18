@@ -65,9 +65,7 @@
     for (var i = 0; i < myData.length; i++) {
       var elem = renderItem(myData[i]);
       fragment.appendChild(elem);
-      // window.data = {
-      //   myData: myData
-      // };
+      window.myData = myData;
     };
     pictureInfo.appendChild(fragment);
   };
@@ -95,13 +93,57 @@
 
 
   // window.load(onSuccess, onError);
-  window.load(renderData, onError);
 
-  // window.pictureInfo = pictureInfo;
-  window.data = {
-    myData: myData,
-    pictureInfo: pictureInfo
-  };
+
+  window.load(renderData, onError);
+  window.pictureInfo = pictureInfo;
+
+
+  var filters = document.querySelector(".img-filters");
+  filters.classList.remove("img-filters--inactive");
+
+  var popular = document.querySelector("#filter-popular");
+  popular.addEventListener("click", function (evt) {
+    evt.preventDefault();
+    var myArr = window.myData;
+    console.log(myArr);
+  });
+
+  var random = document.querySelector("#filter-random");
+  random.addEventListener("click", function (evt) {
+    evt.preventDefault();
+    var myArr = window.myData;
+    var myArrCopy = myArr.slice();
+    for (var i = 0; i < 10; i++) {
+      var myArrItem = myArrCopy[Math.floor(Math.random() * myArrCopy.length)];
+      console.log(myArrItem);
+    };
+  });
+
+  var discussed = document.querySelector("#filter-discussed");
+  discussed.addEventListener("click", function (evt) {
+    evt.preventDefault();
+    var myArr = window.myData;
+    var myArrCopy = myArr.slice();
+    myArrCopy.sort(function (a, b) {
+      // return a.comments - b.comments;
+      if (a.comments < b.comments) {
+        return 1;
+      } else if (a.comments > b.comments) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    console.log(myArrCopy);
+  });
+
+  // var someFn = function (myData) {
+  // window.data.myData = myData;
+  // renderData(myData);
+  // };
+
+  // window.load(someFn, onError);
 
 })();
 
