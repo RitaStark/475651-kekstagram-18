@@ -104,10 +104,7 @@
   popular.addEventListener("click", function (evt) {
     evt.preventDefault();
     var myArr = window.data.myData;
-
-    window.debounce(function () {
-      renderData(myArr);
-    });
+    var db = window.debounce(renderData(myArr));
     console.log(myArr);
   });
 
@@ -123,9 +120,7 @@
     };
     myArrCopy.sort(compareRandom);
 
-    window.debounce(function () {
-      renderData(myArrCopy);
-    });
+    var db = window.debounce(renderData(myArrCopy));
 
     console.log(myArrCopy);
   });
@@ -147,9 +142,8 @@
       }
     });
 
-    window.debounce(function () {
-      renderData(myArrCopy);
-    });
+    var db = window.debounce(renderData(myArrCopy));
+
     console.log(myArrCopy);
   });
 
