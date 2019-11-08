@@ -96,6 +96,7 @@
   });
 
   // фильтрация--------------------------------------------------------------------------------------------------------------------
+  var lastTimeout;
 
   var filters = document.querySelector(".img-filters");
   filters.classList.remove("img-filters--inactive");
@@ -104,9 +105,17 @@
   popular.addEventListener("click", function (evt) {
     evt.preventDefault();
     var myArr = window.data.myData;
-    renderData(myArr);
+
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(function () {
+      renderData(myArr);
+    }, 500);
+
     console.log(myArr);
   });
+
 
   var random = document.querySelector("#filter-random");
   random.addEventListener("click", function (evt) {
@@ -119,7 +128,12 @@
     };
     myArrCopy.sort(compareRandom);
 
-    renderData(myArrCopy);
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(function () {
+      renderData(myArrCopy);
+    }, 500);
     console.log(myArrCopy);
   });
 
@@ -139,8 +153,13 @@
         return 0;
       }
     });
-    console.log(myArrCopy);
-    renderData(myArrCopy);
+
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(function () {
+      renderData(myArrCopy);
+    }, 500);
   });
 
 
