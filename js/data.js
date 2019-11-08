@@ -96,7 +96,6 @@
   });
 
   // фильтрация--------------------------------------------------------------------------------------------------------------------
-  var lastTimeout;
 
   var filters = document.querySelector(".img-filters");
   filters.classList.remove("img-filters--inactive");
@@ -106,13 +105,9 @@
     evt.preventDefault();
     var myArr = window.data.myData;
 
-    if (lastTimeout) {
-      window.clearTimeout(lastTimeout);
-    }
-    lastTimeout = window.setTimeout(function () {
+    window.debounce(function () {
       renderData(myArr);
-    }, 500);
-
+    });
     console.log(myArr);
   });
 
@@ -128,12 +123,10 @@
     };
     myArrCopy.sort(compareRandom);
 
-    if (lastTimeout) {
-      window.clearTimeout(lastTimeout);
-    }
-    lastTimeout = window.setTimeout(function () {
+    window.debounce(function () {
       renderData(myArrCopy);
-    }, 500);
+    });
+
     console.log(myArrCopy);
   });
 
@@ -154,14 +147,11 @@
       }
     });
 
-    if (lastTimeout) {
-      window.clearTimeout(lastTimeout);
-    }
-    lastTimeout = window.setTimeout(function () {
+    window.debounce(function () {
       renderData(myArrCopy);
-    }, 500);
+    });
+    console.log(myArrCopy);
   });
-
 
   var func = function (myData) {
     window.data.myData = myData;
