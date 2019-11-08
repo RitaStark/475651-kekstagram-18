@@ -60,13 +60,17 @@
 
   // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элетменты добавляет в DOM элемент, который представляет собой контейнер с фото.
   var pictureInfo = document.querySelector('.pictures');
+
   var renderData = function (myData) {
     var fragment = document.createDocumentFragment();
+    var pics = document.querySelectorAll('.picture');
+    pics.forEach(function (pic) {
+      pic.remove();
+    });
     for (var i = 0; i < myData.length; i++) {
       var elem = renderItem(myData[i]);
       fragment.appendChild(elem);
-      window.myData = myData;
-    };
+    }
     pictureInfo.appendChild(fragment);
   };
 
@@ -91,13 +95,7 @@
     }
   });
 
-
-  // window.load(onSuccess, onError);
-
-
-  window.load(renderData, onError);
-  window.pictureInfo = pictureInfo;
-
+  // фильтрация--------------------------------------------------------------------------------------------------------------------
 
   var filters = document.querySelector(".img-filters");
   filters.classList.remove("img-filters--inactive");
@@ -105,25 +103,31 @@
   var popular = document.querySelector("#filter-popular");
   popular.addEventListener("click", function (evt) {
     evt.preventDefault();
-    var myArr = window.myData;
+    var myArr = window.data.myData;
+    renderData(myArr);
     console.log(myArr);
   });
 
   var random = document.querySelector("#filter-random");
   random.addEventListener("click", function (evt) {
     evt.preventDefault();
-    var myArr = window.myData;
-    var myArrCopy = myArr.slice();
-    for (var i = 0; i < 10; i++) {
-      var myArrItem = myArrCopy[Math.floor(Math.random() * myArrCopy.length)];
-      console.log(myArrItem);
+    var myArr = window.data.myData;
+    var myArrCopy = myArr.slice(1, 11);
+
+    var compareRandom = function (a, b) {
+      return Math.random() - 0.5;
     };
+    myArrCopy.sort(compareRandom);
+
+    renderData(myArrCopy);
+    console.log(myArrCopy);
   });
+
 
   var discussed = document.querySelector("#filter-discussed");
   discussed.addEventListener("click", function (evt) {
     evt.preventDefault();
-    var myArr = window.myData;
+    var myArr = window.data.myData;
     var myArrCopy = myArr.slice();
     myArrCopy.sort(function (a, b) {
       // return a.comments - b.comments;
@@ -136,15 +140,23 @@
       }
     });
     console.log(myArrCopy);
+    renderData(myArrCopy);
   });
 
-  // var someFn = function (myData) {
-  // window.data.myData = myData;
-  // renderData(myData);
-  // };
 
-  // window.load(someFn, onError);
+  var func = function (myData) {
+    window.data.myData = myData;
+    renderData(myData);
+  };
 
+  window.load(func, onError);
+
+  window.data = {
+    pictureInfo: pictureInfo
+  };
+
+  // window.load(onSuccess, onError);
+  // window.load(renderData, onError);
 })();
 
 
