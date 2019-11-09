@@ -57,18 +57,23 @@
     return element;
   };
 
-  var pictureInfo = document.querySelector('.pictures');
-  window.pictureInfo = pictureInfo;
 
   // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элетменты добавляет в DOM элемент, который представляет собой контейнер с фото.
+  var pictureInfo = document.querySelector('.pictures');
+
   var renderData = function (myData) {
     var fragment = document.createDocumentFragment();
+    var pics = document.querySelectorAll('.picture');
+    pics.forEach(function (pic) {
+      pic.remove();
+    });
     for (var i = 0; i < myData.length; i++) {
       var elem = renderItem(myData[i]);
       fragment.appendChild(elem);
-    };
+    }
     pictureInfo.appendChild(fragment);
   };
+
 
   var errorMessage = document.querySelector("#error").content.querySelector("section");
 
@@ -79,10 +84,9 @@
     pictureInfo.appendChild(fragment);
   };
 
-  var onSuccess = function (data) {
-    // console.log(data);
-    renderData(data);
-  };
+  // var onSuccess = function (data) {
+  //   renderData(data);
+  // };
 
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === 27) {
@@ -91,10 +95,85 @@
     }
   });
 
+  // фильтрация--------------------------------------------------------------------------------------------------------------------
+  var db = window.debounce(renderData);
+  var filters = document.querySelector(".img-filters");
+  filters.classList.remove("img-filters--inactive");
 
-  window.load(onSuccess, onError);
+  var popular = document.querySelector("#filter-popular");
+  popular.addEventListener("click", function (evt) {
+    evt.preventDefault();
+    activeClass(popular);
+    var myArr = window.data.myData;
+    db(myArr);
+
+    console.log(myArr);
+  });
 
 
+  var random = document.querySelector("#filter-random");
+  random.addEventListener("click", function (evt) {
+    evt.preventDefault();
+    activeClass(random);
+    var myArr = window.data.myData;
+    var myArrCopy = myArr.slice(1, 11);
+
+    var compareRandom = function (a, b) {
+      return Math.random() - 0.5;
+    };
+    myArrCopy.sort(compareRandom);
+
+    db(myArrCopy);
+
+    console.log(myArrCopy);
+  });
+
+
+  var discussed = document.querySelector("#filter-discussed");
+  discussed.addEventListener("click", function (evt) {
+    evt.preventDefault();
+    activeClass(discussed);
+    var myArr = window.data.myData;
+    var myArrCopy = myArr.slice();
+    myArrCopy.sort(function (a, b) {
+      // return a.comments - b.comments;
+      if (a.comments < b.comments) {
+        return 1;
+      } else if (a.comments > b.comments) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+
+    db(myArrCopy);
+
+    console.log(myArrCopy);
+  });
+
+  var activeClass = function (elem) {
+    var formButton = document.querySelectorAll("button.img-filters__button");
+    console.log(formButton);
+    for (var i = 0; i < formButton.length; i++) {
+      var item = formButton[i];
+      formButton[i].classList.remove("img-filters__button--active");
+      elem.classList.add("img-filters__button--active");
+    }
+  };
+
+  var func = function (myData) {
+    window.data.myData = myData;
+    renderData(myData);
+  };
+
+  window.load(func, onError);
+
+  window.data = {
+    pictureInfo: pictureInfo
+  };
+
+  // window.load(onSuccess, onError);
+  // window.load(renderData, onError);
 })();
 
 

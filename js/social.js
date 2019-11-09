@@ -78,20 +78,22 @@
     var elem = success.cloneNode(true);
     var fragment = document.createDocumentFragment();
     fragment.appendChild(success);
-    window.pictureInfo.appendChild(fragment);
+    window.data.pictureInfo.appendChild(fragment);
   };
 
   var onError = function (message) {
     var elem = errorMessage.cloneNode(true);
     var fragment = document.createDocumentFragment();
     fragment.appendChild(errorMessage);
-    window.pictureInfo.appendChild(fragment);
+    window.data.pictureInfo.appendChild(fragment);
   };
 
   form.addEventListener('submit', function (evt) {
+
     window.upload(new FormData(form), onSuccess, onError)
     formWindow.classList.add("hidden");
     evt.preventDefault();
+
   });
 
   window.userTagInput = userTagInput;
