@@ -96,15 +96,17 @@
   });
 
   // фильтрация--------------------------------------------------------------------------------------------------------------------
-
+  var db = window.debounce(renderData);
   var filters = document.querySelector(".img-filters");
   filters.classList.remove("img-filters--inactive");
 
   var popular = document.querySelector("#filter-popular");
   popular.addEventListener("click", function (evt) {
     evt.preventDefault();
+    activeClass(popular);
     var myArr = window.data.myData;
-    var db = window.debounce(renderData(myArr));
+    db(myArr);
+
     console.log(myArr);
   });
 
@@ -112,6 +114,7 @@
   var random = document.querySelector("#filter-random");
   random.addEventListener("click", function (evt) {
     evt.preventDefault();
+    activeClass(random);
     var myArr = window.data.myData;
     var myArrCopy = myArr.slice(1, 11);
 
@@ -120,7 +123,7 @@
     };
     myArrCopy.sort(compareRandom);
 
-    var db = window.debounce(renderData(myArrCopy));
+    db(myArrCopy);
 
     console.log(myArrCopy);
   });
@@ -129,6 +132,7 @@
   var discussed = document.querySelector("#filter-discussed");
   discussed.addEventListener("click", function (evt) {
     evt.preventDefault();
+    activeClass(discussed);
     var myArr = window.data.myData;
     var myArrCopy = myArr.slice();
     myArrCopy.sort(function (a, b) {
@@ -142,10 +146,20 @@
       }
     });
 
-    var db = window.debounce(renderData(myArrCopy));
+    db(myArrCopy);
 
     console.log(myArrCopy);
   });
+
+  var activeClass = function (elem) {
+    var formButton = document.querySelectorAll("button.img-filters__button");
+    console.log(formButton);
+    for (var i = 0; i < formButton.length; i++) {
+      var item = formButton[i];
+      formButton[i].classList.remove("img-filters__button--active");
+      elem.classList.add("img-filters__button--active");
+    }
+  };
 
   var func = function (myData) {
     window.data.myData = myData;
