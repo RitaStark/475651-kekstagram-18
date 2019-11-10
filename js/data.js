@@ -1,48 +1,6 @@
 'use strict';
 
 (function () {
-  // var COUNT = 24;
-
-  // var randomNumberCulculation = function (min, max) {
-  //   var randomNumber = min + Math.random() * (max + 1 - min);
-  //   return Math.round(randomNumber);
-  // };
-
-  // var randomItemCulculation = function (arr) {
-  //   var randomItem = Math.floor(Math.random() * arr.length);
-  //   return arr[randomItem];
-  // }
-
-  // var commentList = [
-  //   'Всё отлично!',
-  //   'В целом всё неплохо. Но не всё.',
-  //   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  //   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  //   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  //   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
-  // ];
-
-  // var namesList = ['Вася', 'Петя', 'Артем', 'Иван', 'Маша', 'Саша', 'Даша', 'Коля'];
-
-
-  // var objectArray = [];
-  // for (var i = 0; i < COUNT; i++) {
-  //   var urlList = 'photos/' + (i + 1) + '.jpg';
-  //   var avatarList = 'img/avatar-' + (i + 1) + '.svg';
-  //   var objectItem = {
-  //     url: urlList,
-  //     description: 'Описание фото',
-  //     likes: randomNumberCulculation(15, 200),
-  //     comments: {
-  //       avatar: avatarList,
-  //       message: randomItemCulculation(commentList),
-  //       name: randomItemCulculation(namesList),
-  //     }
-  //   }
-  //   objectArray[i] = objectItem;
-  // };
-
-
   // функция, которая принимает объект с данными, описывающими фото-пост (url, likes, comments..).
   // Возвращает новый HTML-элемент, который является визуальным представлением поста(картинка с комментариями, кол-вом сердечек).
   var renderItem = function (object) {
@@ -56,7 +14,6 @@
     userComments.textContent = 1;
     return element;
   };
-
 
   // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элетменты добавляет в DOM элемент, который представляет собой контейнер с фото.
   var pictureInfo = document.querySelector('.pictures');
@@ -84,10 +41,6 @@
     pictureInfo.appendChild(fragment);
   };
 
-  // var onSuccess = function (data) {
-  //   renderData(data);
-  // };
-
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === 27) {
       evt.preventDefault();
@@ -95,7 +48,7 @@
     }
   });
 
-  // фильтрация--------------------------------------------------------------------------------------------------------------------
+
   var db = window.debounce(renderData);
   var filters = document.querySelector(".img-filters");
   filters.classList.remove("img-filters--inactive");
@@ -106,8 +59,6 @@
     activeClass(popular);
     var myArr = window.data.myData;
     db(myArr);
-
-    console.log(myArr);
   });
 
 
@@ -124,8 +75,6 @@
     myArrCopy.sort(compareRandom);
 
     db(myArrCopy);
-
-    console.log(myArrCopy);
   });
 
 
@@ -136,7 +85,6 @@
     var myArr = window.data.myData;
     var myArrCopy = myArr.slice();
     myArrCopy.sort(function (a, b) {
-      // return a.comments - b.comments;
       if (a.comments < b.comments) {
         return 1;
       } else if (a.comments > b.comments) {
@@ -147,13 +95,10 @@
     });
 
     db(myArrCopy);
-
-    console.log(myArrCopy);
   });
 
   var activeClass = function (elem) {
     var formButton = document.querySelectorAll("button.img-filters__button");
-    console.log(formButton);
     for (var i = 0; i < formButton.length; i++) {
       var item = formButton[i];
       formButton[i].classList.remove("img-filters__button--active");
@@ -171,9 +116,6 @@
   window.data = {
     pictureInfo: pictureInfo
   };
-
-  // window.load(onSuccess, onError);
-  // window.load(renderData, onError);
 })();
 
 

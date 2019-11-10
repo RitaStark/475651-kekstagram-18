@@ -26,12 +26,10 @@
     } else {
       imgPreview.style.filter = "";
     }
-
   };
 
   var updateSliderPosition = function (position) {
     pinHandle.style.left = position * (pinLine.clientWidth - 1) + "px";
-
   };
 
   var hideSlider = function () {
@@ -45,23 +43,8 @@
   imgPreview.classList.add("effects__preview--none");
 
   var addEffectHandler = function (event) {
-    // imgPreview.className = "";
 
     var target = event.target;
-    // if (target.value == "chrome") {
-    //   imgPreview.classList.add("effects__preview--chrome");
-    // } else if (target.value == "sepia") {
-    //   imgPreview.classList.add("effects__preview--sepia");
-    // } else if (target.value == "marvin") {
-    //   imgPreview.classList.add("effects__preview--marvin");
-    // } else if (target.value == "phobos") {
-    //   imgPreview.classList.add("effects__preview--phobos");
-    // } else if (target.value == "heat") {
-    //   imgPreview.classList.add("effects__preview--heat");
-    // } else {
-    //   imgPreview.classList.add("effects__preview--none");
-    //   effectLevel.classList.add('hidden');
-    // }
     currentEffect = target.value;
     applyEffect(currentEffect, 1);
 
@@ -71,10 +54,9 @@
       showSlider();
       updateSliderPosition(1);
     };
-
   };
-  effects.addEventListener("change", addEffectHandler);
 
+  effects.addEventListener("change", addEffectHandler);
 
   pinHandle.addEventListener("mousedown", function (evt) {
     evt.preventDefault();
@@ -94,25 +76,10 @@
         y: moveEvt.clientY
       };
       var newLeft = pinHandle.offsetLeft - shift.x;
-      // if (newLeft >= pinLine.clientWidth) {
-      //   newLeft = pinLine.clientWidth - 1;
-      // };
       newLeft = Math.min(newLeft, pinLine.clientWidth - 1);
-      // if (newLeft < 0) {
-      //   newLeft = 0;
-      // };
       newLeft = Math.max(newLeft, 0);
-
-      // newLeft = Math.max(Math.min(newLeft, pinLine.clientWidth), 0);
-
       pinHandle.style.left = newLeft + "px";
-      // console.log("clientX", moveEvt.clientX, "offsetleft", pinHandle.offsetLeft, "width", pinLine.clientWidth);
-
-      // filters
-
-      // effectStrength принимает значения от 0 до 1
       var effectStrength = newLeft / (pinLine.clientWidth - 1);
-      // console.log("Сила эффекта", effectStrength);
       applyEffect(currentEffect, effectStrength);
     };
 
@@ -125,9 +92,4 @@
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseup", onMouseUp);
   });
-
-  // --------------------------------------------------------------------------------------------------------------
-
-
-
 })();

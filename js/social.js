@@ -20,13 +20,12 @@
   userPhotoTag.addEventListener("input", function () {
     var tagsList = userTagInput.value;
     var tagsArr = tagsList.split(" ");
-    // console.log("tagsArr", tagsArr);
+
 
     for (var i = 0; i < tagsArr.length; i++) {
       var tag = tagsArr[i];
       var validationError = "";
       if (tag.length < 2) {
-        // userTagInput.setCustomValidity("Хэш-тег должен состоять минимум из 2-х символов");
         validationError = "Хэш-тег должен состоять минимум из 2-х символов";
       } else if (tag.length > 20) {
         validationError = "Хэш-тег должен состоять максимум из 20-ти символов";
@@ -38,17 +37,11 @@
         validationError = "Количество хэш-тегов не должно быть больше пяти";
       }
       userTagInput.setCustomValidity(validationError);
-      // console.log("validating tag '" + tag + "' result: " + validationError);
       if (validationError !== "") {
         break;
       }
     };
   });
-
-
-  // var isFocused = function (elem) {
-  //   return elem === document.activeElement;
-  // };
 
   userPhotoComment.addEventListener("input", function () {
     if (userCommentInput.value.length > 140) {

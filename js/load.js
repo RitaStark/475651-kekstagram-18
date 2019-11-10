@@ -26,13 +26,8 @@
 
     xhr.timeout = 10000;
 
-    // console.log(xhr.readyState);
     xhr.open('GET', URL);
-    // console.log(xhr.readyState);
+
     xhr.send();
-    // console.log(xhr.readyState);
-
   }
-
 })();
-
