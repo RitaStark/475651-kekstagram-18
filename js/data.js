@@ -9,14 +9,49 @@
     var userImage = element.querySelector('.picture__img');
     var userLikes = element.querySelector('.picture__likes');
     var userComments = element.querySelector('.picture__comments');
+
     userImage.src = object.url;
     userLikes.textContent = object.likes;
     userComments.textContent = 1;
+
+    var bigPicture = document.querySelector(".big-picture");
+    var bigPictureCloseButton = bigPicture.querySelector(".big-picture__cancel");
+    var bigPictureImage = bigPicture.querySelector(".big-picture__img");
+    var bigPictureLikes = bigPicture.querySelector(".likes-count");
+    var bigPictureCommentsCount = bigPicture.querySelector(".comments-count");
+    var bigPictureDescript = bigPicture.querySelector(".social__caption");
+    var bigPictureComment = bigPicture.querySelector(".social__comment-count");
+    var bigPictureCommentLoad = bigPicture.querySelector(".comments-loader");
+
+    bigPicture.classList.remove("hidden");
+    bigPictureComment.classList.add("visually-hidden");
+    bigPictureCommentLoad.classList.add("visually-hidden");
+
+    bigPicture.src = object.url;
+    bigPictureLikes.textContent = object.likes;
+    bigPictureCommentsCount.textContent = 1;
+    bigPictureDescript.textContent = object.description;
+
+    bigPictureCloseButton.addEventListener("click", function (evt) {
+      evt.preventDefault();
+      bigPicture.classList.add("hidden");
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === 27) {
+        evt.preventDefault();
+        bigPicture.parentNode.removeChild(bigPicture);
+      }
+    });
+
     return element;
+
   };
 
-  // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элетменты добавляет в DOM элемент, который представляет собой контейнер с фото.
+
+  // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элементы добавляет в DOM элемент, который представляет собой контейнер с фото.
   var pictureInfo = document.querySelector('.pictures');
+  // var socialComments = document.querySelector(".social__comments");
 
   var renderData = function (myData) {
     var fragment = document.createDocumentFragment();
@@ -28,7 +63,11 @@
       var elem = renderItem(myData[i]);
       fragment.appendChild(elem);
     }
+
     pictureInfo.appendChild(fragment);
+
+    // socialComments.appendChild(fragment);
+    // console.log(socialComments);
   };
 
 
@@ -110,6 +149,10 @@
     window.data.myData = myData;
     renderData(myData);
   };
+
+
+
+
 
   window.load(func, onError);
 
