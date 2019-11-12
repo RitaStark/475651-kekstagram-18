@@ -14,11 +14,52 @@
     userLikes.textContent = object.likes;
     userComments.textContent = 1;
 
-    var bigPicture = document.querySelector(".big-picture");
-    var bigPictureCloseButton = bigPicture.querySelector(".big-picture__cancel");
-    var bigPictureImage = bigPicture.querySelector(".big-picture__img");
+    return element;
+  };
+
+
+  var renderItemComment = function (elem) {
+    var socialComCont = document.querySelector(".social__comments");
+    var socialCom = socialComCont.querySelector(".social__comment");
+    var socialPic = socialComCont.querySelector(".social__picture");
+    var socialText = socialComCont.querySelector(".social__text");
+    var item = socialComCont.cloneNode(true);
+
+    socialPic.src = elem.avatar;
+    socialPic.alt = elem.name;
+
+    socialText.textContent = elem.message;
+
+    return item;
+  };
+
+  var bigPictureViewerComment = document.querySelector(".social__comments");
+
+  var renderDataComment = function (commentArr) {
+    var fragment = document.createDocumentFragment();
+    var commentsObj = window.data.myData[0];
+    console.log(commentsObj);
+    window.commentArr = commentsObj.comments;
+    console.log(window.commentArr);
+    for (var i = 0; i < commentArr.length; i++) {
+      var elem = commentArr[i];
+      renderItemComment(elem);
+      console.log(elem);
+      fragment.appendChild(elem);
+    }
+    window.data.bigPictureViewerComment.appendChild(fragment);
+  };
+
+  var bigPicture = document.querySelector(".big-picture");
+  var bigPictureCloseButton = bigPicture.querySelector(".big-picture__cancel");
+  var bigPicSocial = document.querySelector(".big-picture__social");
+
+  window.renderPhoto = function (object) {
+    var bigPicSocial = document.querySelector(".big-picture__social");
+    var bigPictureImage = bigPicture.querySelector(".social__picture");
     var bigPictureLikes = bigPicture.querySelector(".likes-count");
-    var bigPictureCommentsCount = bigPicture.querySelector(".comments-count");
+    var item = bigPicSocial.cloneNode(true);
+
     var bigPictureDescript = bigPicture.querySelector(".social__caption");
     var bigPictureComment = bigPicture.querySelector(".social__comment-count");
     var bigPictureCommentLoad = bigPicture.querySelector(".comments-loader");
@@ -27,31 +68,36 @@
     bigPictureComment.classList.add("visually-hidden");
     bigPictureCommentLoad.classList.add("visually-hidden");
 
-    bigPicture.src = object.url;
+    bigPictureImage.src = object.url;
     bigPictureLikes.textContent = object.likes;
-    bigPictureCommentsCount.textContent = 1;
     bigPictureDescript.textContent = object.description;
 
-    bigPictureCloseButton.addEventListener("click", function (evt) {
-      evt.preventDefault();
-      bigPicture.classList.add("hidden");
-    });
+    return item;
 
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === 27) {
-        evt.preventDefault();
-        bigPicture.parentNode.removeChild(bigPicture);
-      }
-    });
+    // var commentsObj = window.data.myData[0];
+    // console.log(commentsObj);
+    // window.commentArr = commentsObj.comments;
+    // console.log(window.comArr);
 
-    return element;
-
+    renderDataComment(window.data.myData[0].comments);
   };
+
+  bigPictureCloseButton.addEventListener("click", function (evt) {
+    evt.preventDefault();
+    bigPicture.classList.add("hidden");
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      evt.preventDefault();
+      bigPicture.parentNode.removeChild(bigPicture);
+    }
+  });
+
 
 
   // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элементы добавляет в DOM элемент, который представляет собой контейнер с фото.
   var pictureInfo = document.querySelector('.pictures');
-  // var socialComments = document.querySelector(".social__comments");
 
   var renderData = function (myData) {
     var fragment = document.createDocumentFragment();
@@ -63,12 +109,9 @@
       var elem = renderItem(myData[i]);
       fragment.appendChild(elem);
     }
-
     pictureInfo.appendChild(fragment);
-
-    // socialComments.appendChild(fragment);
-    // console.log(socialComments);
   };
+
 
 
   var errorMessage = document.querySelector("#error").content.querySelector("section");
@@ -148,16 +191,18 @@
   var func = function (myData) {
     window.data.myData = myData;
     renderData(myData);
+
   };
-
-
-
 
 
   window.load(func, onError);
 
+
   window.data = {
-    pictureInfo: pictureInfo
+    pictureInfo: pictureInfo,
+    bigPictureViewerComment: bigPictureViewerComment,
+    bigPicSocial: bigPicSocial
+
   };
 })();
 

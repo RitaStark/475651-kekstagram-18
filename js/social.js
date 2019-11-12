@@ -72,7 +72,10 @@
     var fragment = document.createDocumentFragment();
     fragment.appendChild(success);
     window.data.pictureInfo.appendChild(fragment);
+
+    window.renderPhoto(window.data.myData[0]);
   };
+
 
   var onError = function (message) {
     var elem = errorMessage.cloneNode(true);
@@ -82,11 +85,9 @@
   };
 
   form.addEventListener('submit', function (evt) {
-
     window.upload(new FormData(form), onSuccess, onError)
     formWindow.classList.add("hidden");
     evt.preventDefault();
-
   });
 
   window.userTagInput = userTagInput;
