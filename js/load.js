@@ -12,16 +12,16 @@
       if (xhr.status === 200) {
         onSuccess(xhr.response);
       } else {
-        onError('Статус ответа: ' + xhr.status + '' + 'xht.statusText')
+        onError('Статус ответа: ' + xhr.status + '' + 'xht.statusText');
       }
     });
 
     xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения')
+      onError('Произошла ошибка соединения');
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс')
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
     xhr.timeout = 10000;
@@ -29,5 +29,5 @@
     xhr.open('GET', URL);
 
     xhr.send();
-  }
+  };
 })();

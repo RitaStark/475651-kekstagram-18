@@ -26,33 +26,31 @@
     }
   });
 
-
-
-  var scaleControl = document.querySelector(".scale");
-  var scaleSmaller = scaleControl.querySelector(".scale__control--smaller");
-  var scaleBigger = scaleControl.querySelector(".scale__control--bigger");
-  var scaleValue = scaleControl.querySelector(".scale__control--value");
-  scaleValue.value = 100 + "%";
-  var numberScaleValue = parseInt(scaleValue.value);
+  var scaleControl = document.querySelector('.scale');
+  var scaleSmaller = scaleControl.querySelector('.scale__control--smaller');
+  var scaleBigger = scaleControl.querySelector('.scale__control--bigger');
+  var scaleValue = scaleControl.querySelector('.scale__control--value');
+  scaleValue.value = 100 + '%';
+  var numberScaleValue = parseInt(scaleValue.value, 10);
 
   var scaleSmallerClickHandler = function () {
     if (numberScaleValue > 25 && numberScaleValue <= 100) {
       numberScaleValue -= 25;
-      var percentScaleValue = numberScaleValue + "%";
+      var percentScaleValue = numberScaleValue + '%';
       scaleValue.value = percentScaleValue;
-      var imagePreview = document.querySelector(".img-upload__preview").style.transform = "scale(" + numberScaleValue / 100 + ")";
+      percentScaleValue = document.querySelector('.img-upload__preview').style.transform = 'scale(' + numberScaleValue / 100 + ')';
     }
   };
-  scaleSmaller.addEventListener("click", scaleSmallerClickHandler);
+  scaleSmaller.addEventListener('click', scaleSmallerClickHandler);
 
 
   var scaleBiggerClickHandler = function () {
     if (numberScaleValue >= 25 && numberScaleValue < 100) {
       numberScaleValue += 25;
-      var percentScaleValue = numberScaleValue + "%";
+      var percentScaleValue = numberScaleValue + '%';
       scaleValue.value = percentScaleValue;
-      var imagePreview = document.querySelector(".img-upload__preview").style.transform = "scale(" + numberScaleValue / 100 + ")";
+      percentScaleValue = document.querySelector('.img-upload__preview').style.transform = 'scale(' + numberScaleValue / 100 + ')';
     }
   };
-  scaleBigger.addEventListener("click", scaleBiggerClickHandler);
+  scaleBigger.addEventListener('click', scaleBiggerClickHandler);
 })();
