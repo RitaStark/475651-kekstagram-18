@@ -47,25 +47,8 @@
 
     return comment;
   };
-  // ----------------------------------------------------------------------------------------
-  // var bigPictureViewerComment = document.querySelector(".social__comments");
 
-  // var renderDataComment = function (commentArr) {
-  //   // var fragment = document.createDocumentFragment();
-  //   var commentsObj = window.data.myData[0];
-  //   console.log(commentsObj);
-  //   window.commentArr = commentsObj.comments;
-  //   console.log(window.commentArr);
-  //   for (var i = 0; i < commentArr.length; i++) {
-  //     var elem = commentArr[i];
-  //     renderItemComment(elem);
-  //     console.log(elem);
-  //     // fragment.appendChild(elem);
-  //   }
-  //   window.data.bigPictureViewerComment.appendChild(fragment);
-  // };
 
-  // ---------------------------------------------------------------------------------------
   window.renderPhoto = function (object) {
     bigPicture.classList.remove("hidden");
 
