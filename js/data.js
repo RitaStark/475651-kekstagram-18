@@ -87,18 +87,6 @@
     renderItemComment(window.data.myData[0].comments[0]);
   };
 
-  bigPictureCloseButton.addEventListener('click', function (evt) {
-    evt.preventDefault();
-    bigPicture.classList.add('hidden');
-  });
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27) {
-      evt.preventDefault();
-      bigPicture.parentNode.removeChild(bigPicture);
-    }
-  });
-
 
   // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элементы добавляет в DOM элемент, который представляет собой контейнер с фото.
   var pictureInfo = document.querySelector('.pictures');
@@ -125,10 +113,20 @@
           window.renderPhoto(myData[index]);
         }
       });
+      item.addEventListener('keydown', function (evt) {
+        if (evt.keyCode === 27) {
+          evt.preventDefault();
+          bigPicture.parentNode.removeChild(bigPicture);
+        }
+      });
       pictureInfo.appendChild(fragment);
     });
-
   };
+
+  bigPictureCloseButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    bigPicture.classList.add('hidden');
+  });
 
 
   var errorMessage = document.querySelector('#error').content.querySelector('section');
