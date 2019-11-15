@@ -71,7 +71,7 @@
     fragment.appendChild(success);
     window.data.pictureInfo.appendChild(fragment);
 
-    window.renderPhoto(window.data.myData[0]);
+    // window.renderPhoto(window.data.myData[0]);
   };
 
 

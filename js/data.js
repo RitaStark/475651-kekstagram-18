@@ -1,26 +1,10 @@
 'use strict';
 
 (function () {
-  // функция, которая принимает объект с данными, описывающими фото-пост (url, likes, comments..).
-  // Возвращает новый HTML-элемент, который является визуальным представлением поста(картинка с комментариями, кол-вом сердечек).
-  var renderItem = function (object) {
-    var template = document.querySelector('#picture').content.querySelector('a');
-    var element = template.cloneNode(true);
-    var userImage = element.querySelector('.picture__img');
-    var userLikes = element.querySelector('.picture__likes');
-    var userComments = element.querySelector('.picture__comments');
-
-    userImage.src = object.url;
-    userLikes.textContent = object.likes;
-    userComments.textContent = 1;
-
-    return element;
-  };
-
   var bigPicture = document.querySelector('.big-picture');
+  var bigPictureImage = bigPicture.querySelector(".big-picture__img img");
   var bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
 
-  var bigPictureImage = bigPicture.querySelector('.social__picture');
   var bigPictureLikes = bigPicture.querySelector('.likes-count');
 
 
@@ -33,12 +17,34 @@
   var socialCom = socialComCont.querySelector('.social__comment').cloneNode(true);
 
 
+  // функция, которая принимает объект с данными, описывающими фото-пост (url, likes, comments..).
+  // Возвращает новый HTML-элемент, который является визуальным представлением поста(картинка с комментариями, кол-вом сердечек).
+  var renderItem = function (object) {
+    var template = document.querySelector('#picture').content.querySelector('a');
+    var element = template.cloneNode(true);
+    var userImage = element.querySelector('.picture__img');
+    var userLikes = element.querySelector('.picture__likes');
+    var userComments = element.querySelector('.picture__comments');
+
+    userImage.src = object.url;
+    userLikes.textContent = object.likes;
+    userComments.textContent = object.comments.length;
+
+
+    return element;
+  };
+
+  var randomNumberCulculation = function (min, max) {
+    var randomNumber = min + Math.random() * (max + 1 - min);
+    return Math.round(randomNumber);
+  };
+
   var renderItemComment = function (elem) {
     var comment = socialCom.cloneNode(true);
     var socialPic = comment.querySelector('.social__picture');
     var socialText = comment.querySelector('.social__text');
 
-    socialPic.src = elem.avatar;
+    socialPic.src = 'img/avatar-' + randomNumberCulculation(1, 5) + '.svg';
     socialPic.alt = elem.name;
 
     socialText.textContent = elem.message;
@@ -93,20 +99,6 @@
     }
   });
 
-  // -------------------------------------------------------------------------------------
-
-
-  var pictureList = document.querySelectorAll('.picture');
-  console.log(pictureList);
-
-  pictureList.forEach(function (el) {
-    el.addEventListener('click', function (evt) {
-      // evt.preventDefault();
-      // window.renderPhoto(window.data.myData[0]);
-      console.log("ffff");
-    });
-  });
-
 
   // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элементы добавляет в DOM элемент, который представляет собой контейнер с фото.
   var pictureInfo = document.querySelector('.pictures');
@@ -117,11 +109,25 @@
     pics.forEach(function (pic) {
       pic.remove();
     });
-    for (var i = 0; i < myData.length; i++) {
-      var elem = renderItem(myData[i]);
-      fragment.appendChild(elem);
-    }
-    pictureInfo.appendChild(fragment);
+
+    myData.forEach(function (elem, index) {
+      var item = renderItem(elem);
+      fragment.appendChild(item);
+
+      item.addEventListener('click', function (evt) {
+        evt.preventDefault();
+        window.renderPhoto(myData[index]);
+
+      });
+      item.addEventListener("keydown", function (evt) {
+        evt.preventDefault();
+        if (evt.keyCode === 13) {
+          window.renderPhoto(myData[index]);
+        }
+      });
+      pictureInfo.appendChild(fragment);
+    });
+
   };
 
 
@@ -201,12 +207,10 @@
   var func = function (myData) {
     window.data.myData = myData;
     renderData(myData);
-
   };
 
 
   window.load(func, onError);
-
 
   window.data = {
     pictureInfo: pictureInfo
