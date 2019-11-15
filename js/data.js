@@ -93,6 +93,20 @@
     }
   });
 
+  // -------------------------------------------------------------------------------------
+
+
+  var pictureList = document.querySelectorAll('.picture');
+  console.log(pictureList);
+
+  pictureList.forEach(function (el) {
+    el.addEventListener('click', function (evt) {
+      // evt.preventDefault();
+      // window.renderPhoto(window.data.myData[0]);
+      console.log("ffff");
+    });
+  });
+
 
   // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элементы добавляет в DOM элемент, который представляет собой контейнер с фото.
   var pictureInfo = document.querySelector('.pictures');
