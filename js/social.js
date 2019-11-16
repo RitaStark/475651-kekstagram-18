@@ -31,6 +31,8 @@
         validationError = 'Хэш-тег должен состоять максимум из 20-ти символов';
       } else if (!tag.startsWith('#')) {
         validationError = 'Хэш-тег должен начинаться с \#';
+      } else if (tag.startsWith('##')) {
+        validationError = 'Хэш-тег не может состоять только из \#';
       } else if (arrContains(tag, tagsArr.slice(0, i))) {
         validationError = 'Хэш-теги не должны повторяться';
       } else if (i > 4) {
@@ -59,19 +61,21 @@
     success.parentNode.removeChild(success);
   });
 
-  document.addEventListener('keydown', function (evt) {
+  var EscAfterSuccess = function (evt) {
     if (evt.keyCode === 27) {
       evt.preventDefault();
       success.parentNode.removeChild(success);
     }
-  });
+    document.removeEventListener('keydown', EscAfterSuccess);
+  };
+  document.addEventListener('keydown', EscAfterSuccess);
 
   var onSuccess = function () {
     var fragment = document.createDocumentFragment();
     fragment.appendChild(success);
     window.data.pictureInfo.appendChild(fragment);
 
-    // window.renderPhoto(window.data.myData[0]);
+    window.renderPhoto(window.data.myData[0]);
   };
 
 
@@ -85,6 +89,8 @@
     window.upload(new FormData(form), onSuccess, onError);
     formWindow.classList.add('hidden');
     evt.preventDefault();
+    form.reset();
+    window.removeElementProperty();
   });
 
   window.userTagInput = userTagInput;

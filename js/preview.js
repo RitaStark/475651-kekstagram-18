@@ -5,6 +5,13 @@
   var changeImage = document.querySelector('.img-upload__overlay');
   var closeButton = changeImage.querySelector('.img-upload__cancel');
 
+  var scaleControl = document.querySelector('.scale');
+  var scaleSmaller = scaleControl.querySelector('.scale__control--smaller');
+  var scaleBigger = scaleControl.querySelector('.scale__control--bigger');
+  var scaleValue = scaleControl.querySelector('.scale__control--value');
+  scaleValue.value = 100 + '%';
+  var numberScaleValue = parseInt(scaleValue.value, 10);
+
   var isFocused = function (elem) {
     return elem === document.activeElement;
   };
@@ -19,19 +26,15 @@
     changeImage.classList.add('hidden');
   });
 
-  document.addEventListener('keydown', function (evt) {
+  var closeFunc = function (evt) {
     if (evt.keyCode === 27 && !(isFocused(window.userTagInput) || isFocused(window.userCommentInput))) {
       evt.preventDefault();
       changeImage.classList.add('hidden');
     }
-  });
+    document.removeEventListener('keydown', closeFunc);
+  };
+  document.addEventListener('keydown', closeFunc);
 
-  var scaleControl = document.querySelector('.scale');
-  var scaleSmaller = scaleControl.querySelector('.scale__control--smaller');
-  var scaleBigger = scaleControl.querySelector('.scale__control--bigger');
-  var scaleValue = scaleControl.querySelector('.scale__control--value');
-  scaleValue.value = 100 + '%';
-  var numberScaleValue = parseInt(scaleValue.value, 10);
 
   var scaleSmallerClickHandler = function () {
     if (numberScaleValue > 25 && numberScaleValue <= 100) {
@@ -43,8 +46,8 @@
   };
   scaleSmaller.addEventListener('click', scaleSmallerClickHandler);
 
-
   var scaleBiggerClickHandler = function () {
+
     if (numberScaleValue >= 25 && numberScaleValue < 100) {
       numberScaleValue += 25;
       var percentScaleValue = numberScaleValue + '%';
@@ -53,4 +56,10 @@
     }
   };
   scaleBigger.addEventListener('click', scaleBiggerClickHandler);
+
+  window.removeElementProperty = function () {
+    var previewPhoto = document.querySelector('.img-upload__preview');
+    previewPhoto.style.removeProperty("transform");
+  };
+
 })();

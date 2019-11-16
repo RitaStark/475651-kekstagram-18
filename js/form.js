@@ -4,6 +4,8 @@
   var effects = document.querySelector('.effects');
   var imgPreview = document.querySelector('.img-upload__preview img');
   var effectLevel = document.querySelector('.effect-level');
+  var effectLevelValue = document.querySelector('.effect-level__value');
+  var effectLevelDepth = document.querySelector('.effect-level__depth');
 
   var pinLine = document.querySelector('.effect-level__line');
   var pinHandle = document.querySelector('.effect-level__pin');
@@ -11,18 +13,25 @@
   var currentEffect = 'none';
 
   var applyEffect = function (name, strength) {
+    imgPreview.className = '';
     if (name === 'chrome') {
-      imgPreview.style.filter = 'grayscale(' + strength + ')';
+      effectLevelValue.style.filter = 'grayscale(' + strength + ')';
+      imgPreview.classList.add("effects__preview--chrome");
     } else if (name === 'sepia') {
-      imgPreview.style.filter = 'sepia(' + strength + ')';
+      effectLevelValue.style.filter = 'sepia(' + strength + ')';
+      imgPreview.classList.add("effects__preview--sepia");
     } else if (name === 'marvin') {
-      imgPreview.style.filter = 'invert(' + (strength * 100) + '%)';
+      effectLevelValue.style.filter = 'invert(' + (strength * 100) + '%)';
+      imgPreview.classList.add("effects__preview--marvin");
     } else if (name === 'phobos') {
-      imgPreview.style.filter = 'blur(' + (strength * 3) + 'px)';
+      effectLevelValue.style.filter = 'blur(' + (strength * 3) + 'px)';
+      imgPreview.classList.add("effects__preview--phobos");
     } else if (name === 'heat') {
-      imgPreview.style.filter = 'brightness(' + (strength * 2 + 1) + ')';
+      effectLevelValue.style.filter = 'brightness(' + (strength * 2 + 1) + ')';
+      imgPreview.classList.add("effects__preview--heat");
     } else {
-      imgPreview.style.filter = '';
+      effectLevelValue.style.filter = '';
+      imgPreview.classList.add("effects__preview--none");
     }
   };
 
@@ -38,7 +47,7 @@
     effectLevel.classList.remove('hidden');
   };
 
-  imgPreview.classList.add('effects__preview--none');
+  effectLevelValue.classList.add('effects__preview--none');
 
   var addEffectHandler = function (event) {
 
@@ -73,11 +82,15 @@
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
+
       var newLeft = pinHandle.offsetLeft - shift.x;
       newLeft = Math.min(newLeft, pinLine.clientWidth - 1);
       newLeft = Math.max(newLeft, 0);
       pinHandle.style.left = newLeft + 'px';
       var effectStrength = newLeft / (pinLine.clientWidth - 1);
+
+      effectLevelDepth.style.width = pinHandle.style.left;
+
       applyEffect(currentEffect, effectStrength);
     };
 
