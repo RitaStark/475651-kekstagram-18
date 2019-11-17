@@ -92,7 +92,6 @@
     var commentLoadFunc = function (evt) {
       evt.preventDefault();
       renderComments();
-      bigPictureCommentLoad.removeEventListener('click', commentLoadFunc);
     };
     bigPictureCommentLoad.addEventListener('click', commentLoadFunc);
 
@@ -144,8 +143,7 @@
   bigPictureOverlay.addEventListener('keydown', function (evt) {
     if (evt.keyCode === 27) {
       evt.preventDefault();
-      bigPictureOverlay.parentNode.removeChild(bigPictureOverlay);
-      // bigPicture.classList.add('hidden');
+      bigPicture.classList.add('hidden');
     }
   });
 
@@ -217,20 +215,19 @@
 
   var makeFilterActive = function (elem) {
     var filterButtons = document.querySelectorAll('button.img-filters__button');
-    for (var i = 0; i < filterButtons.length; i++) {
-      filterButtons[i].classList.remove('img-filters__button--active');
-      elem.classList.add('img-filters__button--active');
-    }
+    filterButtons.forEach(function (button) {
+      button.classList.toggle('img-filters__button--active', button === elem)
+    });
   };
 
 
-  var func = function (myData) {
+  var renderFunction = function (myData) {
     window.data.myData = myData;
     renderData(myData);
   };
 
 
-  window.load(func, onError);
+  window.load(renderFunction, onError);
 
   window.data = {
     pictureInfo: pictureInfo

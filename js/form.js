@@ -15,28 +15,42 @@
   var applyEffect = function (name, strength) {
     imgPreview.className = '';
     if (name === 'chrome') {
-      effectLevelValue.style.filter = 'grayscale(' + strength + ')';
+      imgPreview.style.filter = 'grayscale(' + strength + ')';
       imgPreview.classList.add("effects__preview--chrome");
+      effectLevelValue.value = Math.round(strength * 100);
+
     } else if (name === 'sepia') {
-      effectLevelValue.style.filter = 'sepia(' + strength + ')';
+      imgPreview.style.filter = 'sepia(' + strength + ')';
       imgPreview.classList.add("effects__preview--sepia");
+      effectLevelValue.value = Math.round(strength * 100);
+
     } else if (name === 'marvin') {
-      effectLevelValue.style.filter = 'invert(' + (strength * 100) + '%)';
+      imgPreview.style.filter = 'invert(' + (strength * 100) + '%)';
       imgPreview.classList.add("effects__preview--marvin");
+      effectLevelValue.value = Math.round(strength * 100);
+
     } else if (name === 'phobos') {
-      effectLevelValue.style.filter = 'blur(' + (strength * 3) + 'px)';
+      imgPreview.style.filter = 'blur(' + (strength * 3) + 'px)';
       imgPreview.classList.add("effects__preview--phobos");
+      effectLevelValue.value = Math.round(strength * 100);
+
     } else if (name === 'heat') {
-      effectLevelValue.style.filter = 'brightness(' + (strength * 2 + 1) + ')';
+      imgPreview.style.filter = 'brightness(' + (strength * 2 + 1) + ')';
       imgPreview.classList.add("effects__preview--heat");
+      effectLevelValue.value = Math.round(strength * 100);
+
     } else {
-      effectLevelValue.style.filter = '';
+      imgPreview.style.filter = '';
       imgPreview.classList.add("effects__preview--none");
+      effectLevelValue.value = Math.round(strength * 100);
+
     }
   };
 
+
   var updateSliderPosition = function (position) {
     pinHandle.style.left = position * (pinLine.clientWidth - 1) + 'px';
+    effectLevelDepth.style.width = pinHandle.style.left;
   };
 
   var hideSlider = function () {
@@ -70,7 +84,6 @@
 
     var startCoords = {
       x: evt.clientX,
-      y: evt.clientY
     };
 
     var onMouseMove = function (moveEvt) {
@@ -80,7 +93,6 @@
       };
       startCoords = {
         x: moveEvt.clientX,
-        y: moveEvt.clientY
       };
 
       var newLeft = pinHandle.offsetLeft - shift.x;
@@ -90,6 +102,8 @@
       var effectStrength = newLeft / (pinLine.clientWidth - 1);
 
       effectLevelDepth.style.width = pinHandle.style.left;
+
+      effectLevelValue.setAttribute('value', effectLevelValue.value);
 
       applyEffect(currentEffect, effectStrength);
     };
