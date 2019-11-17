@@ -93,8 +93,6 @@
     window.form.imgPreview.className = 'effects__preview--none';
     window.form.imgPreview.style.filter = '';
   });
-  window.currentEffect = 'none';
-  console.log(window.currentEffect);
 
   window.userTagInput = userTagInput;
   window.userCommentInput = userCommentInput;

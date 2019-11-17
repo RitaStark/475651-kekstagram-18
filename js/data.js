@@ -3,7 +3,7 @@
 (function () {
   var bigPicture = document.querySelector('.big-picture');
   var bigPictureOverlay = document.querySelector('.big-picture.overlay');
-  var bigPictureImage = bigPicture.querySelector(".big-picture__img img");
+  var bigPictureImage = bigPicture.querySelector('.big-picture__img img');
   var bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
 
   var bigPictureLikes = bigPicture.querySelector('.likes-count');
@@ -18,8 +18,6 @@
   var socialCom = socialComCont.querySelector('.social__comment').cloneNode(true);
 
 
-  // функция, которая принимает объект с данными, описывающими фото-пост (url, likes, comments..).
-  // Возвращает новый HTML-элемент, который является визуальным представлением поста(картинка с комментариями, кол-вом сердечек).
   var renderItem = function (object) {
     var template = document.querySelector('#picture').content.querySelector('a');
     var element = template.cloneNode(true);
@@ -72,7 +70,7 @@
 
     var renderComments = function () {
       var fragment = document.createDocumentFragment();
-      var commentLengthElem = bigPicture.querySelector(".social__comment-count");
+      var commentLengthElem = bigPicture.querySelector('.social__comment-count');
       var countComments = socialComCont.childElementCount;
       var nextCountComments = countComments + COMMENTS_LENGTH_STEP;
 
@@ -95,11 +93,9 @@
     };
     bigPictureCommentLoad.addEventListener('click', commentLoadFunc);
 
-    // renderItemComment(window.data.myData[0].comments[0]);
   };
 
 
-  // функция, которая перебирает массив данных, рендерит каждый элемент массива с помощью функции renderItem, получившиеся элементы добавляет в DOM элемент, который представляет собой контейнер с фото.
   var pictureInfo = document.querySelector('.pictures');
 
   var renderData = function (myData) {
@@ -125,7 +121,7 @@
       var keydownHandler = function (evt) {
         if (evt.keyCode === 27) {
           evt.preventDefault();
-          bigPicture.parentNode.removeChild(bigPicture);
+          bigPicture.classList.add('hidden');
         }
         item.removeEventListener('click', keydownHandler);
       };
@@ -216,7 +212,7 @@
   var makeFilterActive = function (elem) {
     var filterButtons = document.querySelectorAll('button.img-filters__button');
     filterButtons.forEach(function (button) {
-      button.classList.toggle('img-filters__button--active', button === elem)
+      button.classList.toggle('img-filters__button--active', button === elem);
     });
   };
 

@@ -10,8 +10,7 @@
   var pinLine = document.querySelector('.effect-level__line');
   var pinHandle = document.querySelector('.effect-level__pin');
 
-  window.currentEffect = 'none';
-  console.log(window.currentEffect);
+  var currentEffect = 'none';
 
   var applyEffect = function (name, strength) {
     imgPreview.className = '';
@@ -119,6 +118,7 @@
   });
 
   window.form = {
-    imgPreview: imgPreview
+    imgPreview: imgPreview,
+    effectLevel: effectLevel
   };
 })();
