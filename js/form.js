@@ -10,43 +10,43 @@
   var pinLine = document.querySelector('.effect-level__line');
   var pinHandle = document.querySelector('.effect-level__pin');
 
-  var currentEffect = 'none';
+  window.currentEffect = 'none';
+  console.log(window.currentEffect);
 
   var applyEffect = function (name, strength) {
     imgPreview.className = '';
     if (name === 'chrome') {
       imgPreview.style.filter = 'grayscale(' + strength + ')';
-      imgPreview.classList.add("effects__preview--chrome");
+      imgPreview.classList.add('effects__preview--chrome');
       effectLevelValue.value = Math.round(strength * 100);
 
     } else if (name === 'sepia') {
       imgPreview.style.filter = 'sepia(' + strength + ')';
-      imgPreview.classList.add("effects__preview--sepia");
+      imgPreview.classList.add('effects__preview--sepia');
       effectLevelValue.value = Math.round(strength * 100);
 
     } else if (name === 'marvin') {
       imgPreview.style.filter = 'invert(' + (strength * 100) + '%)';
-      imgPreview.classList.add("effects__preview--marvin");
+      imgPreview.classList.add('effects__preview--marvin');
       effectLevelValue.value = Math.round(strength * 100);
 
     } else if (name === 'phobos') {
       imgPreview.style.filter = 'blur(' + (strength * 3) + 'px)';
-      imgPreview.classList.add("effects__preview--phobos");
+      imgPreview.classList.add('effects__preview--phobos');
       effectLevelValue.value = Math.round(strength * 100);
 
     } else if (name === 'heat') {
       imgPreview.style.filter = 'brightness(' + (strength * 2 + 1) + ')';
-      imgPreview.classList.add("effects__preview--heat");
+      imgPreview.classList.add('effects__preview--heat');
       effectLevelValue.value = Math.round(strength * 100);
 
     } else {
       imgPreview.style.filter = '';
-      imgPreview.classList.add("effects__preview--none");
+      imgPreview.classList.add('effects__preview--none');
       effectLevelValue.value = Math.round(strength * 100);
 
     }
   };
-
 
   var updateSliderPosition = function (position) {
     pinHandle.style.left = position * (pinLine.clientWidth - 1) + 'px';
@@ -117,4 +117,8 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  window.form = {
+    imgPreview: imgPreview
+  };
 })();

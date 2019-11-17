@@ -19,14 +19,18 @@
   upload.addEventListener('change', function (evt) {
     evt.preventDefault();
     changeImage.classList.remove('hidden');
+    var hop = document.querySelector(".effect-level");
+    hop.classList.add("hidden");
   });
+
 
   closeButton.addEventListener('click', function (evt) {
     evt.preventDefault();
     changeImage.classList.add('hidden');
   });
 
-  var closeFunc = function (evt) {
+
+  window.closeFunc = function (evt) {
     if (evt.keyCode === 27 && !(isFocused(window.userTagInput) || isFocused(window.userCommentInput))) {
       evt.preventDefault();
       changeImage.classList.add('hidden');

@@ -78,7 +78,6 @@
     window.renderPhoto(window.data.myData[0]);
   };
 
-
   var onError = function () {
     var fragment = document.createDocumentFragment();
     fragment.appendChild(errorMessage);
@@ -91,7 +90,11 @@
     evt.preventDefault();
     form.reset();
     window.removeElementProperty();
+    window.form.imgPreview.className = 'effects__preview--none';
+    window.form.imgPreview.style.filter = '';
   });
+  window.currentEffect = 'none';
+  console.log(window.currentEffect);
 
   window.userTagInput = userTagInput;
   window.userCommentInput = userCommentInput;
