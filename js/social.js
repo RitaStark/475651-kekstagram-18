@@ -61,21 +61,18 @@
     success.parentNode.removeChild(success);
   });
 
-  var EscAfterSuccess = function (evt) {
+  var escAfterSuccess = function (evt) {
     if (evt.keyCode === 27) {
       evt.preventDefault();
       success.parentNode.removeChild(success);
     }
-    document.removeEventListener('keydown', EscAfterSuccess);
+    document.removeEventListener('keydown', escAfterSuccess);
   };
-  document.addEventListener('keydown', EscAfterSuccess);
 
   var onSuccess = function () {
     var fragment = document.createDocumentFragment();
     fragment.appendChild(success);
     window.data.pictureInfo.appendChild(fragment);
-
-    window.renderPhoto(window.data.myData[0]);
   };
 
   var onError = function () {
@@ -85,6 +82,7 @@
   };
 
   form.addEventListener('submit', function (evt) {
+    document.addEventListener('keydown', escAfterSuccess);
     window.upload(new FormData(form), onSuccess, onError);
     formWindow.classList.add('hidden');
     evt.preventDefault();

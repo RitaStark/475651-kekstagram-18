@@ -112,9 +112,9 @@
 
       var clickHandler = function (evt) {
         evt.preventDefault();
+        bigPicture.classList.remove('hidden');
         window.renderPhoto(myData[index]);
         bodyClass.classList.add('modal-open');
-        item.removeEventListener('click', clickHandler);
       };
       item.addEventListener('click', clickHandler);
 
