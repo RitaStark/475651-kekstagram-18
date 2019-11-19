@@ -2,7 +2,6 @@
 
 (function () {
   var bigPicture = document.querySelector('.big-picture');
-  var bigPictureOverlay = document.querySelector('.big-picture.overlay');
   var bigPictureImage = bigPicture.querySelector('.big-picture__img img');
   var bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
 
@@ -95,13 +94,12 @@
 
   };
 
-
   var pictureInfo = document.querySelector('.pictures');
-
+  var bodyClass = document.querySelector('body');
   var renderData = function (myData) {
     var fragment = document.createDocumentFragment();
     var pics = document.querySelectorAll('.picture');
-    var bodyClass = document.querySelector('body');
+    // var bodyClass = document.querySelector('body');
     pics.forEach(function (pic) {
       pic.remove();
     });
@@ -132,11 +130,13 @@
   };
 
   bigPictureCloseButton.addEventListener('click', function (evt) {
+    bodyClass.classList.remove('modal-open');
     evt.preventDefault();
     bigPicture.classList.add('hidden');
   });
 
-  bigPictureOverlay.addEventListener('keydown', function (evt) {
+  document.addEventListener('keydown', function (evt) {
+    bodyClass.classList.remove('modal-open');
     if (evt.keyCode === 27) {
       evt.preventDefault();
       bigPicture.classList.add('hidden');
