@@ -7,6 +7,8 @@
   var userTagInput = document.querySelector('input.text__hashtags');
   var userCommentInput = document.querySelector('textarea.text__description');
 
+  var mainBlock = document.querySelector('main');
+
 
   var arrContains = function (elem, arr) {
     for (var i = 0; i < arr.length; i++) {
@@ -54,12 +56,15 @@
   var form = document.querySelector('.img-upload__form');
   var formWindow = form.querySelector('.img-upload__overlay');
   var success = document.querySelector('#success').content.querySelector('section');
+  var successButton = success.querySelector('.success__button');
   var errorMessage = document.querySelector('#error').content.querySelector('section');
 
-  success.addEventListener('click', function (evt) {
-    evt.preventDefault();
-    success.parentNode.removeChild(success);
-  });
+
+  var onSuccess = function () {
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(success);
+    mainBlock.appendChild(fragment);
+  };
 
   var escAfterSuccess = function (evt) {
     if (evt.keyCode === 27) {
@@ -69,21 +74,40 @@
     document.removeEventListener('keydown', escAfterSuccess);
   };
 
-  var onSuccess = function () {
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(success);
-    window.data.pictureInfo.appendChild(fragment);
-  };
+  success.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    if (!evt.target.closest('.success__inner')) {
+      success.parentNode.removeChild(success);
+      document.removeEventListener('keydown', escAfterSuccess);
+    }
+  });
 
-  var onError = function () {
+  successButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    success.parentNode.removeChild(success);
+    document.removeEventListener('keydown', escAfterSuccess);
+  });
+
+  window.onError = function () {
     var fragment = document.createDocumentFragment();
     fragment.appendChild(errorMessage);
-    window.data.pictureInfo.appendChild(fragment);
+    mainBlock.appendChild(fragment);
   };
+
+
+  var escAfterError = function (evt) {
+    if (evt.keyCode === 27) {
+      evt.preventDefault();
+      errorMessage.parentNode.removeChild(errorMessage);
+    }
+    success.removeEventListener('keydown', escAfterError);
+  };
+
 
   form.addEventListener('submit', function (evt) {
     document.addEventListener('keydown', escAfterSuccess);
-    window.upload(new FormData(form), onSuccess, onError);
+    success.addEventListener('keydown', escAfterError);
+    window.upload(new FormData(form), onSuccess, window.onError);
     formWindow.classList.add('hidden');
     evt.preventDefault();
     form.reset();

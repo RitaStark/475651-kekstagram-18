@@ -31,17 +31,13 @@
     return element;
   };
 
-  var randomNumberCulculation = function (min, max) {
-    var randomNumber = min + Math.random() * (max + 1 - min);
-    return Math.round(randomNumber);
-  };
 
   var renderItemComment = function (elem) {
     var comment = socialCom.cloneNode(true);
     var socialPic = comment.querySelector('.social__picture');
     var socialText = comment.querySelector('.social__text');
 
-    socialPic.src = 'img/avatar-' + randomNumberCulculation(1, 5) + '.svg';
+    socialPic.src = elem.avatar;
     socialPic.alt = elem.name;
 
     socialText.textContent = elem.message;
@@ -99,7 +95,6 @@
   var renderData = function (myData) {
     var fragment = document.createDocumentFragment();
     var pics = document.querySelectorAll('.picture');
-    // var bodyClass = document.querySelector('body');
     pics.forEach(function (pic) {
       pic.remove();
     });
@@ -144,33 +139,32 @@
   });
 
   var errorMessage = document.querySelector('#error').content.querySelector('section');
+  var errorButtons = errorMessage.querySelectorAll('button.error__button');
 
-  var onError = function () {
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(errorMessage);
-    pictureInfo.appendChild(fragment);
-  };
-
-  var errorrMessageHandler = function (evt) {
-    if (evt.keyCode === 27) {
+  errorButtons.forEach(function (item) {
+    var errorButtonHandler = function (evt) {
       evt.preventDefault();
+      // if (!evt.target.closest('.error__inner')) {
+
       errorMessage.parentNode.removeChild(errorMessage);
-    }
-    errorMessage.removeEventListener('keydown', errorrMessageHandler);
-  };
-  errorMessage.addEventListener('keydown', errorrMessageHandler);
+      // }
+    };
+    item.addEventListener('click', errorButtonHandler);
+  });
+
+
+
 
   var removeDebounce = window.debounce(renderData);
   var filters = document.querySelector('.img-filters');
-  filters.classList.remove('img-filters--inactive');
 
   var popular = document.querySelector('#filter-popular');
 
   popular.addEventListener('click', function (evt) {
     evt.preventDefault();
     makeFilterActive(popular);
-    var myArray = window.data.myData;
-    removeDebounce(myArray);
+    var photoCards = window.data.myData;
+    removeDebounce(photoCards);
   });
 
 
@@ -178,15 +172,15 @@
   random.addEventListener('click', function (evt) {
     evt.preventDefault();
     makeFilterActive(random);
-    var myArray = window.data.myData;
-    var myArrayCopy = myArray.slice(1, 11);
+    var photoCards = window.data.myData;
+    var photoCardsCopy = photoCards.slice(1, 11);
 
     var compareRandom = function () {
       return Math.random() - 0.5;
     };
-    myArrayCopy.sort(compareRandom);
+    photoCardsCopy.sort(compareRandom);
 
-    removeDebounce(myArrayCopy);
+    removeDebounce(photoCardsCopy);
   });
 
 
@@ -194,9 +188,9 @@
   discussed.addEventListener('click', function (evt) {
     evt.preventDefault();
     makeFilterActive(discussed);
-    var myArray = window.data.myData;
-    var myArrayCopy = myArray.slice();
-    myArrayCopy.sort(function (a, b) {
+    var photoCards = window.data.myData;
+    var photoCardsCopy = photoCards.slice();
+    photoCardsCopy.sort(function (a, b) {
       if (a.comments < b.comments) {
         return 1;
       } else if (a.comments > b.comments) {
@@ -206,7 +200,7 @@
       }
     });
 
-    removeDebounce(myArrayCopy);
+    removeDebounce(photoCardsCopy);
   });
 
   var makeFilterActive = function (elem) {
@@ -218,12 +212,13 @@
 
 
   var renderFunction = function (myData) {
+    filters.classList.remove('img-filters--inactive');
     window.data.myData = myData;
     renderData(myData);
   };
 
 
-  window.load(renderFunction, onError);
+  window.load(renderFunction, window.onError);
 
   window.data = {
     pictureInfo: pictureInfo
