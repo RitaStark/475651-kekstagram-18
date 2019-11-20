@@ -138,23 +138,6 @@
     }
   });
 
-  var errorMessage = document.querySelector('#error').content.querySelector('section');
-  var errorButtons = errorMessage.querySelectorAll('button.error__button');
-
-  errorButtons.forEach(function (item) {
-    var errorButtonHandler = function (evt) {
-      evt.preventDefault();
-      // if (!evt.target.closest('.error__inner')) {
-
-      errorMessage.parentNode.removeChild(errorMessage);
-      // }
-    };
-    item.addEventListener('click', errorButtonHandler);
-  });
-
-
-
-
   var removeDebounce = window.debounce(renderData);
   var filters = document.querySelector('.img-filters');
 

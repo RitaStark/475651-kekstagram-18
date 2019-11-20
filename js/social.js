@@ -59,11 +59,9 @@
   var successButton = success.querySelector('.success__button');
   var errorMessage = document.querySelector('#error').content.querySelector('section');
 
-
   var onSuccess = function () {
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(success);
-    mainBlock.appendChild(fragment);
+    mainBlock.appendChild(success);
+    document.addEventListener('keydown', escAfterSuccess);
   };
 
   var escAfterSuccess = function (evt) {
@@ -73,6 +71,38 @@
     }
     document.removeEventListener('keydown', escAfterSuccess);
   };
+
+  window.onError = function () {
+    mainBlock.appendChild(errorMessage);
+    document.addEventListener('keydown', escAfterError);
+  };
+
+  var escAfterError = function (evt) {
+    if (evt.keyCode === 27) {
+      evt.preventDefault();
+      errorMessage.parentNode.removeChild(errorMessage);
+    }
+    document.removeEventListener('keydown', escAfterError);
+  };
+
+  var errorButtons = errorMessage.querySelectorAll('button.error__button');
+
+  errorButtons.forEach(function (item) {
+    item.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      errorMessage.parentNode.removeChild(errorMessage);
+    });
+  });
+
+
+  errorMessage.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    if (!evt.target.closest('.error__inner')) {
+      errorMessage.parentNode.removeChild(errorMessage);
+      document.removeEventListener('keydown', escAfterError);
+    }
+  });
+
 
   success.addEventListener('click', function (evt) {
     evt.preventDefault();
@@ -88,25 +118,8 @@
     document.removeEventListener('keydown', escAfterSuccess);
   });
 
-  window.onError = function () {
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(errorMessage);
-    mainBlock.appendChild(fragment);
-  };
-
-
-  var escAfterError = function (evt) {
-    if (evt.keyCode === 27) {
-      evt.preventDefault();
-      errorMessage.parentNode.removeChild(errorMessage);
-    }
-    success.removeEventListener('keydown', escAfterError);
-  };
-
 
   form.addEventListener('submit', function (evt) {
-    document.addEventListener('keydown', escAfterSuccess);
-    success.addEventListener('keydown', escAfterError);
     window.upload(new FormData(form), onSuccess, window.onError);
     formWindow.classList.add('hidden');
     evt.preventDefault();
